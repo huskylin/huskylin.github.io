@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Ubuntu Server 18.04 離線狀態下安裝 MySQL | 工程師都是中二病!</title>
+  <meta name="description" content="在 Ubuntu Server 18.04 離線狀態下安裝 MySQL (Install MySQL on Ubuntu While Offline)背景最近一個專案遇到的情況，基於資安政策考量，規定機器不能連外部網路這樣就不能直接使用sudo apt-get install mysql-serve來安裝過程蠻不方便的，記錄一下給遇到同樣處境的人。作法主要參考了這篇文章: ubuntu16.04">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu Server 18.04 離線狀態下安裝 MySQL">
+<meta property="og:url" content="https://huskylin.github.io/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/index.html">
+<meta property="og:site_name" content="工程師都是中二病">
+<meta property="og:description" content="在 Ubuntu Server 18.04 離線狀態下安裝 MySQL (Install MySQL on Ubuntu While Offline)背景最近一個專案遇到的情況，基於資安政策考量，規定機器不能連外部網路這樣就不能直接使用sudo apt-get install mysql-serve來安裝過程蠻不方便的，記錄一下給遇到同樣處境的人。作法主要參考了這篇文章: ubuntu16.04">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/ZJVBRTi.png">
+<meta property="og:image" content="https://i.imgur.com/5dEPbNl.png">
+<meta property="og:image" content="https://i.imgur.com/fmLmCIO.png">
+<meta property="og:image" content="https://i.imgur.com/x2u701t.png">
+<meta property="og:image" content="https://i.imgur.com/Czreha1.png">
+<meta property="article:published_time" content="2019-07-16T03:35:15.000Z">
+<meta property="article:modified_time" content="2020-06-16T03:46:11.270Z">
+<meta property="article:author" content="huksylin">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="部屬">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/ZJVBRTi.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://huskylin.github.io/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">huksylin</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">雜端工程師</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> </small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>隨手記錄學習筆記</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leaflet/" rel="tag">Leaflet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/impala/" rel="tag">impala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 13px;">JavaScript</a> <a href="/tags/Leaflet/" style="font-size: 13px;">Leaflet</a> <a href="/tags/MySQL/" style="font-size: 13px;">MySQL</a> <a href="/tags/Node-js/" style="font-size: 13.5px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Ubuntu/" style="font-size: 13px;">Ubuntu</a> <a href="/tags/hadoop/" style="font-size: 13.5px;">hadoop</a> <a href="/tags/impala/" style="font-size: 13.5px;">impala</a> <a href="/tags/ubuntu/" style="font-size: 13.5px;">ubuntu</a> <a href="/tags/%E9%83%A8%E5%B1%AC/" style="font-size: 14px;">部屬</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" class="title">在Node.JS透過ODBC連接impala完整教學(下)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-17T10:00:22.000Z" itemprop="datePublished">2020-06-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" class="title">在Node.JS透過ODBC連接impala完整教學(上)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-15T10:00:22.000Z" itemprop="datePublished">2020-06-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" class="title">Ubuntu Server 18.04 離線狀態下安裝 MySQL</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-16T03:35:15.000Z" itemprop="datePublished">2019-07-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" class="title">Leaflet讀取GeoJSON檔</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-07T10:00:22.000Z" itemprop="datePublished">2018-10-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" class="title">CSS放大圖片會爆框</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-01T10:08:02.000Z" itemprop="datePublished">2018-09-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Ubuntu-Server-18-04-離線狀態下安裝-MySQL" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu Server 18.04 離線狀態下安裝 MySQL
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" class="article-date">
+	  <time datetime="2019-07-16T03:35:15.000Z" itemprop="datePublished">2019-07-16</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/MySQL/" rel="tag">MySQL</a>, <a class="article-tag-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a>, <a class="article-tag-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="在-Ubuntu-Server-18-04-離線狀態下安裝-MySQL-Install-MySQL-on-Ubuntu-While-Offline"><a href="#在-Ubuntu-Server-18-04-離線狀態下安裝-MySQL-Install-MySQL-on-Ubuntu-While-Offline" class="headerlink" title="在 Ubuntu Server 18.04 離線狀態下安裝 MySQL (Install MySQL on Ubuntu While Offline)"></a>在 Ubuntu Server 18.04 離線狀態下安裝 MySQL (Install MySQL on Ubuntu While Offline)</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近一個專案遇到的情況，基於資安政策考量，規定機器不能連外部網路<br>這樣就不能直接使用<code>sudo apt-get install mysql-serve</code>來安裝<br>過程蠻不方便的，記錄一下給遇到同樣處境的人。<br>作法主要參考了這篇文章: <a href="https://www.cnblogs.com/JasonTech0713/p/6690949.html" target="_blank" rel="noopener">ubuntu16.04 安装离线 mysql5.7.17</a><br>但是<strong>MySQL 8.0 版本與以前的版本安裝步驟略有不同</strong>，會在以下內容中提到</p>
+<hr>
+<h2 id="準備安裝包"><a href="#準備安裝包" class="headerlink" title="準備安裝包"></a>準備安裝包</h2><h3 id="1-下載對應的-MySQL-安裝包"><a href="#1-下載對應的-MySQL-安裝包" class="headerlink" title="1. 下載對應的 MySQL 安裝包"></a>1. 下載對應的 MySQL 安裝包</h3><p>本文以<code>Ubuntu Linux 18.04 (x86, 64-bit), DEB Bundle</code>為例<br><img src="https://i.imgur.com/ZJVBRTi.png" alt="MySQL官網下載"></p>
+<h3 id="2-準備-USB"><a href="#2-準備-USB" class="headerlink" title="2. 準備 USB"></a>2. 準備 USB</h3><p>檢查一下裡面包含這些檔案<br>把<code>mysql-server_8.0.16–2ubuntu18.04_amd64.deb-bundle.tar</code><br>放置到 USB 隨身碟裝置中<br><img src="https://i.imgur.com/5dEPbNl.png" alt="mysql-server-deb-bundle"></p>
+<blockquote>
+<p>註記: 這邊 USB 要先在 Ubuntu 環境中測試看看能不能用，有些需要重新格式化</p>
+</blockquote>
+<hr>
+<h2 id="掛載-USB-隨身碟"><a href="#掛載-USB-隨身碟" class="headerlink" title="掛載 USB 隨身碟"></a>掛載 USB 隨身碟</h2><h3 id="1-先查-USB-隨身碟是被系統辨識成那個裝置"><a href="#1-先查-USB-隨身碟是被系統辨識成那個裝置" class="headerlink" title="1. 先查 USB 隨身碟是被系統辨識成那個裝置"></a>1. 先查 USB 隨身碟是被系統辨識成那個裝置</h3><p><code>fdisk -l</code><br>sda 很可能是硬碟,往下查容量可以找到隨身碟的編號<br>我們假設為 sdb<br><img src="https://i.imgur.com/fmLmCIO.png" alt=""></p>
+<h3 id="2-建立-USB-隨身碟的掛載點："><a href="#2-建立-USB-隨身碟的掛載點：" class="headerlink" title="2. 建立 USB 隨身碟的掛載點："></a>2. 建立 USB 隨身碟的掛載點：</h3><p><code>mkdir /mnt/usb</code></p>
+<h3 id="3-掛載-USB-隨身碟"><a href="#3-掛載-USB-隨身碟" class="headerlink" title="3. 掛載 USB 隨身碟"></a>3. 掛載 USB 隨身碟</h3><p><code>mount -v -t auto /dev/sdb /mnt/usb</code></p>
+<blockquote>
+<p>-v 顯示資訊<br>-t auto 讓系統自動分辯檔案系統</p>
+</blockquote>
+<h3 id="4-到-mnt-usb-可看到-usb-的內容"><a href="#4-到-mnt-usb-可看到-usb-的內容" class="headerlink" title="4. 到 /mnt/usb 可看到 usb 的內容"></a>4. 到 /mnt/usb 可看到 usb 的內容</h3><p>解壓縮後檢視一下檔案<br><img src="https://i.imgur.com/x2u701t.png" alt="USB掛載內容"></p>
+<blockquote>
+<p>註記: 檔名多一個(1)的部份是我有重新下載過<br>第一次下載時不知道是不是檔案有毀損，出現異常錯誤<br>如果有遇到也可以試試看重新下載</p>
+</blockquote>
+<hr>
+<h2 id="開始安裝"><a href="#開始安裝" class="headerlink" title="開始安裝"></a>開始安裝</h2><h3 id="1-下載依賴的安裝包"><a href="#1-下載依賴的安裝包" class="headerlink" title="1. 下載依賴的安裝包"></a>1. 下載依賴的安裝包</h3><p>根據參考文章，還需要兩個額外依賴包，可以在這邊下載<br><a href="https://pkgs.org/download/libaio1" target="_blank" rel="noopener">https://pkgs.org/download/libaio1</a><br><a href="https://pkgs.org/download/libmecab2" target="_blank" rel="noopener">https://pkgs.org/download/libmecab2</a></p>
+<h3 id="2-安裝-MySQL"><a href="#2-安裝-MySQL" class="headerlink" title="2. 安裝 MySQL"></a>2. 安裝 MySQL</h3><ol>
+<li><code>sudo dpkg -i mysql-common_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li><code>sudo dpkg-preconfigure mysql-community-server_8.0.16–2ubuntu18.04_amd64.deb</code><br><strong>(這步驟會跳出安裝畫面，並且需要輸入 root 密碼)</strong></li>
+<li><code>sudo dpkg -i libmysqlclient21_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li><code>sudo dpkg -i libmysqlclient-dev_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li>參考文章中這一步是安裝<code>libmysqld-dev_5.7.16–1ubuntu16.04_amd64.deb</code><br>但是根據官方版本資訊，8.0 版本已經不需要這個檔案了，所以不需要做這個步驟<br><img src="https://i.imgur.com/Czreha1.png" alt="MySQL 8.0官方資訊"></li>
+<li>參考文章中的這步驟是安裝<code>mysql-community-client_8.0.16–2ubuntu18.04_amd64.deb</code><br>不過如果直接安裝會跳出錯誤，顯示缺少依賴，所以在這 8.0 中需要先安裝<br><code>mysql-community-client-core_8.0.16–2ubuntu18.04_amd64.deb</code><br>所以執行<br><code>sudo dpkg -i mysql-community-client-core_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li><code>sudo dpkg -i mysql-community-client_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li><code>sudo dpkg -i mysql-client_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li><code>sudo dpkg -i mysql-common_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li>參考文章中的這步驟是安裝<code>mysql-community-server_8.0.16–2ubuntu18.04_amd64.de</code><br>不過如果直接安裝會跳出錯誤，顯示缺少依賴，所以在這 8.0 中需要先安裝<br><code>mysql-community-server-core_8.0.16–2ubuntu18.04_amd64.deb</code><br>所以執行<br><code>sudo dpkg -i mysql-community-server-core_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li><code>sudo dpkg -i mysql-community-server_8.0.16–2ubuntu18.04_amd64.deb</code></li>
+<li><code>sudo dpkg -i mysql-server_8.0.16–2ubuntu18.04_amd64.deb</code><br><strong>打完這一大坨指令後，就大功告成啦!</strong><br>最後可以去 MySQL 裡面試一下指令，確認安裝結果<br><code>mysql -u root -p</code></li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://huskylin.github.io/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" title="Ubuntu Server 18.04 離線狀態下安裝 MySQL" target="_blank" rel="external">https://huskylin.github.io/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">huksylin</span><small class="ml-1x">雜端工程師</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" title="在Node.JS透過ODBC連接impala完整教學(上)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" title="Leaflet讀取GeoJSON檔"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+    <script defer>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://huskylin.github.io/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/';
+        
+        this.page.identifier = 'Ubuntu-Server-18-04-離線狀態下安裝-MySQL';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + '' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

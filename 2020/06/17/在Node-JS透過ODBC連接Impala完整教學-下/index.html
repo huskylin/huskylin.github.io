@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>在Node.JS透過ODBC連接impala完整教學(下) | 工程師都是中二病!</title>
+  <meta name="description" content="在Node.JS透過ODBC連接Impala完整教學(下)步驟二，在 Node.js 上連接到 Ubuntu 上的 ODBC上一篇完成了在 Ubuntu 上安裝 ODBC Driver的部分接下來就是透過 Node.js來連接啦 1. 安裝套件看了一下 Node.js 連接 ODBC的 相關套件這套是到近期都還有有維持更新的，因此採用node-odbc 1npm install odbc 2. 設">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Node.JS透過ODBC連接impala完整教學(下)">
+<meta property="og:url" content="https://huskylin.github.io/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/index.html">
+<meta property="og:site_name" content="工程師都是中二病">
+<meta property="og:description" content="在Node.JS透過ODBC連接Impala完整教學(下)步驟二，在 Node.js 上連接到 Ubuntu 上的 ODBC上一篇完成了在 Ubuntu 上安裝 ODBC Driver的部分接下來就是透過 Node.js來連接啦 1. 安裝套件看了一下 Node.js 連接 ODBC的 相關套件這套是到近期都還有有維持更新的，因此採用node-odbc 1npm install odbc 2. 設">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://media.giphy.com/media/oymRV1UYQWLFNM78Xe/giphy.gif">
+<meta property="og:image" content="https://media.giphy.com/media/oOX5qIDkzDjeo/giphy.gif">
+<meta property="article:published_time" content="2020-06-17T10:00:22.000Z">
+<meta property="article:modified_time" content="2020-06-17T14:52:57.020Z">
+<meta property="article:author" content="huksylin">
+<meta property="article:tag" content="部屬">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="impala">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="hadoop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.giphy.com/media/oymRV1UYQWLFNM78Xe/giphy.gif">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://huskylin.github.io/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">huksylin</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">雜端工程師</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> </small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>隨手記錄學習筆記</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leaflet/" rel="tag">Leaflet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/impala/" rel="tag">impala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 13px;">JavaScript</a> <a href="/tags/Leaflet/" style="font-size: 13px;">Leaflet</a> <a href="/tags/MySQL/" style="font-size: 13px;">MySQL</a> <a href="/tags/Node-js/" style="font-size: 13.5px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Ubuntu/" style="font-size: 13px;">Ubuntu</a> <a href="/tags/hadoop/" style="font-size: 13.5px;">hadoop</a> <a href="/tags/impala/" style="font-size: 13.5px;">impala</a> <a href="/tags/ubuntu/" style="font-size: 13.5px;">ubuntu</a> <a href="/tags/%E9%83%A8%E5%B1%AC/" style="font-size: 14px;">部屬</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" class="title">在Node.JS透過ODBC連接impala完整教學(下)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-17T10:00:22.000Z" itemprop="datePublished">2020-06-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" class="title">在Node.JS透過ODBC連接impala完整教學(上)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-15T10:00:22.000Z" itemprop="datePublished">2020-06-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" class="title">Ubuntu Server 18.04 離線狀態下安裝 MySQL</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-16T03:35:15.000Z" itemprop="datePublished">2019-07-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" class="title">Leaflet讀取GeoJSON檔</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-07T10:00:22.000Z" itemprop="datePublished">2018-10-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" class="title">CSS放大圖片會爆框</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-01T10:08:02.000Z" itemprop="datePublished">2018-09-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-在Node-JS透過ODBC連接Impala完整教學-下" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在Node.JS透過ODBC連接impala完整教學(下)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" class="article-date">
+	  <time datetime="2020-06-17T10:00:22.000Z" itemprop="datePublished">2020-06-17</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Node-js/" rel="tag">Node.js</a>, <a class="article-tag-link" href="/tags/hadoop/" rel="tag">hadoop</a>, <a class="article-tag-link" href="/tags/impala/" rel="tag">impala</a>, <a class="article-tag-link" href="/tags/ubuntu/" rel="tag">ubuntu</a>, <a class="article-tag-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="在Node-JS透過ODBC連接Impala完整教學-下"><a href="#在Node-JS透過ODBC連接Impala完整教學-下" class="headerlink" title="在Node.JS透過ODBC連接Impala完整教學(下)"></a>在Node.JS透過ODBC連接Impala完整教學(下)</h1><h2 id="步驟二，在-Node-js-上連接到-Ubuntu-上的-ODBC"><a href="#步驟二，在-Node-js-上連接到-Ubuntu-上的-ODBC" class="headerlink" title="步驟二，在 Node.js 上連接到 Ubuntu 上的 ODBC"></a>步驟二，在 Node.js 上連接到 Ubuntu 上的 ODBC</h2><p>上一篇完成了<code>在 Ubuntu 上安裝 ODBC Driver</code>的部分<br>接下來就是透過 Node.js來連接啦<br><img src="https://media.giphy.com/media/oymRV1UYQWLFNM78Xe/giphy.gif" alt="letsgo"></p>
+<h3 id="1-安裝套件"><a href="#1-安裝套件" class="headerlink" title="1. 安裝套件"></a>1. 安裝套件</h3><p>看了一下 Node.js 連接 ODBC的 相關套件<br>這套是到近期都還有有維持更新的，因此採用<br><a href="https://github.com/markdirish/node-odbc/" target="_blank" rel="noopener">node-odbc</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install odbc</span><br></pre></td></tr></table></figure>
+<h3 id="2-設定連接"><a href="#2-設定連接" class="headerlink" title="2. 設定連接"></a>2. 設定連接</h3><p>官方範例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> odbc = <span class="built_in">require</span>(<span class="string">'odbc'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">connectToDatabase</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> connection1 = <span class="keyword">await</span> odbc.connect(<span class="string">'DSN=MYDSN'</span>);</span><br><span class="line">    <span class="comment">// connection1 is now an open Connection</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// or using a configuration object</span></span><br><span class="line">    <span class="keyword">const</span> connectionConfig = &#123;</span><br><span class="line">        connectionString: <span class="string">'DSN=MYDSN'</span>,</span><br><span class="line">        connectionTimeout: <span class="number">10</span>,</span><br><span class="line">        loginTimeout: <span class="number">10</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> connection2 = <span class="keyword">await</span> odbc.connect(connectionConfig);</span><br><span class="line">    <span class="comment">// connection2 is now an open Connection</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">connectToDatabase();</span><br></pre></td></tr></table></figure>
+<p>這邊比較要注意的是<br><code>connectionString: &#39;DSN=MYDSN&#39;</code><br>這個<code>DSN</code>就是<code>Data Source Name</code><br>如果是按照上一篇的範例，我們是取名為<code>impalaodbc</code><br>所以會長這樣</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> connectionConfig = &#123;</span><br><span class="line">      connectionString: <span class="string">'DSN=impalaodbc'</span>,</span><br><span class="line">      connectionTimeout: <span class="number">10</span>,</span><br><span class="line">      loginTimeout: <span class="number">10</span>,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-執行-Query"><a href="#3-執行-Query" class="headerlink" title="3. 執行 Query"></a>3. 執行 Query</h3><p>執行 Query、Pool 可以在官方文件上查詢 API 與範例<br>這個套件的官方文件 API 寫得蠻清楚的<br><a href="https://github.com/markdirish/node-odbc/#api" target="_blank" rel="noopener">主要可以在上面看</a><br>但是值得注意的是<br><strong>Impala 的欄位名稱是不分大小寫的</strong><br><strong>Impala 的欄位名稱是不分大小寫的</strong><br><strong>Impala 的欄位名稱是不分大小寫的</strong></p>
+<blockquote>
+<p>Impala identifiers are always case-insensitive. That is, tables named t1 and T1 always refer to the same table, regardless of quote characters. Internally, Impala always folds all specified table and column names to lowercase. This is why the column headers in query output are always displayed in lowercase.<br><a href="https://docs.cloudera.com/documentation/enterprise/5-5-x/topics/impala_identifiers.html" target="_blank" rel="noopener">官方文件說明</a></p>
+</blockquote>
+<p>像我是從<code>MySQL</code>轉移過來的就會遇到問題<br>所以我寫了一個取代欄位名稱的 Function<br>第一個參數是從<code>Impala</code>撈回來的資料<br>第二個參數則是你希望取代的欄位名稱<br>例如: <code>[&#39;Id&#39;, &#39;InfoDate&#39;, &#39;ColName&#39;, &#39;Something&#39;...]</code><br>直接取代每一個物件的<code>key</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toCaseSensitiveKeys</span>(<span class="params">result, newKeys</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// make keys array to keys object</span></span><br><span class="line">  <span class="keyword">const</span> replacements = &#123;&#125;;</span><br><span class="line">  <span class="keyword">if</span> (newKeys !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    newKeys.forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">      replacements[key.toLowerCase()] = key;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// pair keys by replacements object</span></span><br><span class="line">  <span class="keyword">const</span> data = result.map(<span class="function"><span class="params">row</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> replacedItems = <span class="built_in">Object</span>.keys(row).map(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> newKey = replacements[key] || key;</span><br><span class="line">      <span class="keyword">return</span> &#123; [newKey]: row[key] &#125;;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">const</span> newResult = replacedItems.reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> <span class="built_in">Object</span>.assign(&#123;&#125;, a, b));</span><br><span class="line">    <span class="keyword">return</span> newResult;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最後的 Query Function </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> impalaQuery = <span class="function">(<span class="params">sql, values, newKeys</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Create Connection Pool</span></span><br><span class="line">    <span class="keyword">const</span> connectionConfig = &#123;</span><br><span class="line">      connectionString: <span class="string">'DSN=impalaodbc'</span>,</span><br><span class="line">      connectionTimeout: <span class="number">10</span>,</span><br><span class="line">      loginTimeout: <span class="number">10</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    odbc.connect(connectionConfig, (conError, connection) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (conError) &#123;</span><br><span class="line">        reject(conError);</span><br><span class="line">      &#125;</span><br><span class="line">      connection.query(sql, values, (err, rows) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          <span class="comment">// If execute SQL faild, print SQL</span></span><br><span class="line">          connection.createStatement(<span class="function">(<span class="params">error1, statement</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (error1) &#123; <span class="built_in">console</span>.log(error1, statement); <span class="keyword">return</span>; &#125; <span class="comment">// handle</span></span><br><span class="line">            statement.prepare(sql, (error2) =&gt; &#123;</span><br><span class="line">              <span class="keyword">if</span> (error2) &#123; <span class="built_in">console</span>.log(error2, statement); <span class="keyword">return</span>; &#125; <span class="comment">// handle</span></span><br><span class="line">              statement.bind(values, (error3) =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span> (error3) &#123; <span class="built_in">console</span>.log(error3, statement); <span class="keyword">return</span>; &#125; <span class="comment">// handle</span></span><br><span class="line">              &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">          &#125;);</span><br><span class="line">          reject(err);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">const</span> idx = rows.indexOf(<span class="string">'statement'</span>)</span><br><span class="line">          <span class="keyword">const</span> values = rows.slice(<span class="number">0</span>, idx).map(<span class="function">(<span class="params">e, i</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> e</span><br><span class="line">          &#125;)</span><br><span class="line">          <span class="keyword">const</span> data = toCaseSensitiveKeys(values, newKeys);</span><br><span class="line">          <span class="comment">// print SQL</span></span><br><span class="line">          <span class="built_in">console</span>.log(rows[<span class="string">'statement'</span>]);</span><br><span class="line">          resolve(data);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>主要是加入了</p>
+<ol>
+<li>錯誤時透過階段來偵錯</li>
+<li>印出執行的SQL</li>
+<li>轉換大小寫 </li>
+</ol>
+<p>在其他地方就可以這樣使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sql = <span class="string">'yourSQL'</span>;</span><br><span class="line"><span class="keyword">const</span> values = [SomeParms...];</span><br><span class="line"><span class="keyword">const</span> keys = [SomeColNames...];</span><br><span class="line">impalaQuery(sql, values, keys)</span><br><span class="line">    .then(<span class="function"><span class="params">results</span> =&gt;</span> &#123;</span><br><span class="line">        res.status(<span class="number">200</span>).json(results);</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">        res.status(<span class="number">500</span>).send(<span class="string">'DB Error'</span>);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>這次的<code>在Node.JS透過ODBC連接Impala</code>就大功告成啦!</strong><br>其實蠻費工的，寫這篇文時也回顧了不少苦難<br>希望可以幫助到有同樣需求的人~<br><img src="https://media.giphy.com/media/oOX5qIDkzDjeo/giphy.gif" alt="cry_laugh"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://huskylin.github.io/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" title="在Node.JS透過ODBC連接impala完整教學(下)" target="_blank" rel="external">https://huskylin.github.io/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">huksylin</span><small class="ml-1x">雜端工程師</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" title="在Node.JS透過ODBC連接impala完整教學(上)"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+    <script defer>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://huskylin.github.io/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/';
+        
+        this.page.identifier = '在Node-JS透過ODBC連接Impala完整教學-下';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + '' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

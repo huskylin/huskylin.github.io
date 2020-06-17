@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>在Node.JS透過ODBC連接impala完整教學(上) | 工程師都是中二病!</title>
+  <meta name="description" content="在Node.JS透過ODBC連接Impala完整教學(上)背景原本專案的後端，在開發階段時採用Node.js連接MySQL結果後來到部屬階段時要改連接到impala原本以為是小事一樁，後來採坑連連於是產生了本篇筆記 初始想法 node-impala 套件一開始看到 npm 裡面已經有人做好套件了連接範例看起來也蠻簡潔的就直接採用 node-impala測試後的確也蠻快就能夠連上並且撈取資料但是!!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Node.JS透過ODBC連接impala完整教學(上)">
+<meta property="og:url" content="https://huskylin.github.io/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/index.html">
+<meta property="og:site_name" content="工程師都是中二病">
+<meta property="og:description" content="在Node.JS透過ODBC連接Impala完整教學(上)背景原本專案的後端，在開發階段時採用Node.js連接MySQL結果後來到部屬階段時要改連接到impala原本以為是小事一樁，後來採坑連連於是產生了本篇筆記 初始想法 node-impala 套件一開始看到 npm 裡面已經有人做好套件了連接範例看起來也蠻簡潔的就直接採用 node-impala測試後的確也蠻快就能夠連上並且撈取資料但是!!">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://media.giphy.com/media/JEVqknUonZJWU/giphy.gif">
+<meta property="og:image" content="https://i.imgur.com/gzoUbOp.png">
+<meta property="og:image" content="https://media.giphy.com/media/MhHXeM4SpKrpC/giphy.gif">
+<meta property="article:published_time" content="2020-06-15T10:00:22.000Z">
+<meta property="article:modified_time" content="2020-06-17T14:52:28.812Z">
+<meta property="article:author" content="huksylin">
+<meta property="article:tag" content="部屬">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="impala">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="hadoop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.giphy.com/media/JEVqknUonZJWU/giphy.gif">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://huskylin.github.io/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">huksylin</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">雜端工程師</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> </small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>隨手記錄學習筆記</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leaflet/" rel="tag">Leaflet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/impala/" rel="tag">impala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 13px;">JavaScript</a> <a href="/tags/Leaflet/" style="font-size: 13px;">Leaflet</a> <a href="/tags/MySQL/" style="font-size: 13px;">MySQL</a> <a href="/tags/Node-js/" style="font-size: 13.5px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Ubuntu/" style="font-size: 13px;">Ubuntu</a> <a href="/tags/hadoop/" style="font-size: 13.5px;">hadoop</a> <a href="/tags/impala/" style="font-size: 13.5px;">impala</a> <a href="/tags/ubuntu/" style="font-size: 13.5px;">ubuntu</a> <a href="/tags/%E9%83%A8%E5%B1%AC/" style="font-size: 14px;">部屬</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" class="title">在Node.JS透過ODBC連接impala完整教學(下)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-17T10:00:22.000Z" itemprop="datePublished">2020-06-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" class="title">在Node.JS透過ODBC連接impala完整教學(上)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-15T10:00:22.000Z" itemprop="datePublished">2020-06-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" class="title">Ubuntu Server 18.04 離線狀態下安裝 MySQL</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-16T03:35:15.000Z" itemprop="datePublished">2019-07-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" class="title">Leaflet讀取GeoJSON檔</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-07T10:00:22.000Z" itemprop="datePublished">2018-10-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" class="title">CSS放大圖片會爆框</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-01T10:08:02.000Z" itemprop="datePublished">2018-09-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-在Node-JS透過ODBC連接Impala完整教學-上" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在Node.JS透過ODBC連接impala完整教學(上)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" class="article-date">
+	  <time datetime="2020-06-15T10:00:22.000Z" itemprop="datePublished">2020-06-15</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Node-js/" rel="tag">Node.js</a>, <a class="article-tag-link" href="/tags/hadoop/" rel="tag">hadoop</a>, <a class="article-tag-link" href="/tags/impala/" rel="tag">impala</a>, <a class="article-tag-link" href="/tags/ubuntu/" rel="tag">ubuntu</a>, <a class="article-tag-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="在Node-JS透過ODBC連接Impala完整教學-上"><a href="#在Node-JS透過ODBC連接Impala完整教學-上" class="headerlink" title="在Node.JS透過ODBC連接Impala完整教學(上)"></a>在Node.JS透過ODBC連接Impala完整教學(上)</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>原本專案的後端，在開發階段時採用<code>Node.js</code>連接<code>MySQL</code><br>結果後來到部屬階段時要改連接到<code>impala</code><br><strong>原本以為是小事一樁，後來採坑連連</strong><br>於是產生了本篇筆記<br><img src="https://media.giphy.com/media/JEVqknUonZJWU/giphy.gif" alt="crying"></p>
+<h2 id="初始想法-node-impala-套件"><a href="#初始想法-node-impala-套件" class="headerlink" title="初始想法 node-impala 套件"></a>初始想法 node-impala 套件</h2><p>一開始看到 npm 裡面已經有人做好套件了<br>連接範例看起來也蠻簡潔的<br>就直接採用 <a href="https://www.npmjs.com/package/node-impala" target="_blank" rel="noopener">node-impala</a><br>測試後的確也蠻快就能夠連上並且撈取資料<br>但是!!<br>過很久之後才發現<br><strong>他的query一次最多回傳1024筆結果!</strong><br><strong>他的query一次最多回傳1024筆結果!</strong><br><strong>他的query一次最多回傳1024筆結果!</strong></p>
+<p>看了issue後才發現<br>是因為底層使用<code>Beeswax</code>來連接，這是<code>Beeswax</code>的限制無法改變</p>
+<blockquote>
+<p>Beeswax limits the query result. It is not possible to increase the size by setting <em>fetch_size</em> <a href="https://github.com/ufukomer/node-impala/blob/master/src/thrift/beeswax.thrift#L129" target="_blank" rel="noopener">here</a>. Let’s use the <strong>HiveServer2</strong> #4. 🙈</p>
+</blockquote>
+<p><a href="https://github.com/ufukomer/node-impala/issues/11#issuecomment-274798646" target="_blank" rel="noopener">原討論串</a></p>
+<p>煎熬了一陣子後決定直接放棄另尋他路</p>
+<h2 id="解法-ODBC"><a href="#解法-ODBC" class="headerlink" title="解法 ODBC"></a>解法 ODBC</h2><p>後來找到的方法是在系統環境下先裝好 ODBC 來連接 Impala<br>後端 Node.js 再去連 ODBC<br>我們的作業系統環境是使用<code>Ubuntu 18.04</code><br>所以接下來就是有兩個步驟要執行</p>
+<ol>
+<li>在 Ubuntu 上安裝 ODBC Driver</li>
+<li>在 Node.js 上連接到 Ubuntu 上的 ODBC</li>
+</ol>
+<h2 id="步驟一，在-Ubuntu-上安裝-ODBC-Driver"><a href="#步驟一，在-Ubuntu-上安裝-ODBC-Driver" class="headerlink" title="步驟一，在 Ubuntu 上安裝 ODBC Driver"></a>步驟一，在 Ubuntu 上安裝 ODBC Driver</h2><h3 id="1-下載安裝包"><a href="#1-下載安裝包" class="headerlink" title="1. 下載安裝包"></a>1. 下載安裝包</h3><p><a href="https://www.cloudera.com/downloads/connectors/impala/odbc/2-6-10.html" target="_blank" rel="noopener">cloudera下載連結</a><br><a href="https://docs.cloudera.com/documentation/other/connectors/impala-odbc/latest/Cloudera-ODBC-Driver-for-Impala-Install-Guide.pdf#%5B%7B%22num%22%3A218%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C78%2C729.75%2C0%5D" target="_blank" rel="noopener">Cloudera ODBC Driver for Impala 官方文件說明</a></p>
+<h3 id="2-設定環境變數"><a href="#2-設定環境變數" class="headerlink" title="2. 設定環境變數"></a>2. 設定環境變數</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/usr/<span class="built_in">local</span>/lib:/opt/cloudera/impalaodbc/lib/64</span><br><span class="line"><span class="built_in">export</span> CLOUDERAIMPALAINI=/opt/cloudera/impalaodbc/lib/64/cloudera.impalaodbc.ini</span><br><span class="line"><span class="built_in">export</span> LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libodbcinst.so</span><br><span class="line"><span class="built_in">export</span> ODBCINI=/etc/odbc.ini</span><br><span class="line"><span class="built_in">export</span> ODBCSYSINI=/etc</span><br></pre></td></tr></table></figure>
+<h3 id="3-設定-ODBC-driver-的參數檔"><a href="#3-設定-ODBC-driver-的參數檔" class="headerlink" title="3. 設定 ODBC driver 的參數檔"></a>3. 設定 ODBC driver 的參數檔</h3><p>大致上長這樣<br>比較需要注意的地方是</p>
+<ol>
+<li><code>[impalaodbc]</code> 這是你自己要取的 Data Source Name</li>
+<li><code>PORT</code>要注意一下是21050還是21000</li>
+<li>`Drive‵路徑</li>
+<li>帳號密碼、DB位置等等<br>其他都是預設值而已，自行參考變化即可<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[impalaodbc]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Description: DSN Description. This key is not necessary and is only to give a description of the data</span></span><br><span class="line"><span class="comment"># source.</span></span><br><span class="line">Description=Cloudera ODBC Driver <span class="keyword">for</span> Impala (64-bit) DSN</span><br><span class="line"></span><br><span class="line"><span class="comment"># Driver: The location where the ODBC driver is installed to.</span></span><br><span class="line">Driver=/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so</span><br><span class="line"></span><br><span class="line"><span class="comment"># The DriverUnicodeEncoding setting is only used for SimbaDM When set to 1, SimbaDM runs in UTF-16 mode. When</span></span><br><span class="line"><span class="comment">#set to 2, SimbaDM runs in UTF-8 mode. DriverUnicodeEncoding=2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Values for HOST, PORT, KrbFQDN, and KrbServiceName should be set here. They can also be specified on the</span></span><br><span class="line"><span class="comment"># connection string.</span></span><br><span class="line">HOST=Impala Server的IP位置</span><br><span class="line">PORT=21050</span><br><span class="line">Database=DB名稱</span><br><span class="line"></span><br><span class="line"><span class="comment"># The authentication mechanism. 0 - no authentication. 1 - Kerberos authentication 2 - Username</span></span><br><span class="line"><span class="comment"># authentication. 3 - Username/password authentication. 4 - Username/password authentication with SSL.</span></span><br><span class="line">AuthMech=0</span><br><span class="line"></span><br><span class="line"><span class="comment"># Kerberos related settings.</span></span><br><span class="line">KrbFQDN=</span><br><span class="line">KrbRealm=</span><br><span class="line">KrbServiceName=</span><br><span class="line"></span><br><span class="line"><span class="comment"># Username/password authentication with SSL settings.</span></span><br><span class="line">UID=DB帳號</span><br><span class="line">PWD=DB密碼</span><br><span class="line">CAIssuedCertNamesMismatch=1</span><br><span class="line">TrustedCerts=/opt/cloudera/impalaodbc/lib/64/cacerts.pem</span><br><span class="line"></span><br><span class="line"><span class="comment"># Specify the proxy user ID to use. DelegationUID=</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># General settings</span></span><br><span class="line">TSaslTransportBufSize=1000</span><br><span class="line">RowsFetchedPerBlock=1000</span><br><span class="line">SocketTimeout=0</span><br></pre></td></tr></table></figure>
+<h3 id="4-安裝-unixODBC"><a href="#4-安裝-unixODBC" class="headerlink" title="4. 安裝 unixODBC"></a>4. 安裝 unixODBC</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install unixODBC unixODBC-dev</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="5-測試"><a href="#5-測試" class="headerlink" title="5. 測試"></a>5. 測試</h3><ol>
+<li>查看你的ODBC設定 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">odbcinst -q -s</span><br></pre></td></tr></table></figure>
+ 如果成功的話應該會顯示你的 Data Source Name</li>
+<li>測試連線 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">isql -v impalaodbc</span><br></pre></td></tr></table></figure>
+ 如果成功的話應該會顯示你的連線後介面</li>
+</ol>
+<p><img src="https://i.imgur.com/gzoUbOp.png" alt=""></p>
+<p>到這部分完成了在 Ubuntu 上安裝 ODBC Driver<br><strong>\ 恭喜恭喜 / \ 灑花灑花/</strong><br><img src="https://media.giphy.com/media/MhHXeM4SpKrpC/giphy.gif" alt="congrats"><br>喘口氣，下一篇再來講 步驟二 Node.js 的部分~</p>
+<h2 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h2><ol>
+<li><a href="http://hadoop4beginner.blogspot.com/2015/05/installing-impala-odbc-driver-in-ubuntu.html" target="_blank" rel="noopener">Installing Impala ODBC Driver in Ubuntu 64 bit </a></li>
+<li><a href="https://blog.csdn.net/yangzhaohui168/article/details/38800803" target="_blank" rel="noopener">Impala ODBC 安装笔记</a></li>
+<li><a href="https://blog.csdn.net/ggz631047367/article/details/50703990" target="_blank" rel="noopener">ubuntu14.04配置impala的odbc连接</a></li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://huskylin.github.io/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" title="在Node.JS透過ODBC連接impala完整教學(上)" target="_blank" rel="external">https://huskylin.github.io/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">huksylin</span><small class="ml-1x">雜端工程師</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" title="在Node.JS透過ODBC連接impala完整教學(下)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" title="Ubuntu Server 18.04 離線狀態下安裝 MySQL"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+    <script defer>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://huskylin.github.io/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/';
+        
+        this.page.identifier = '在Node-JS透過ODBC連接Impala完整教學-上';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + '' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

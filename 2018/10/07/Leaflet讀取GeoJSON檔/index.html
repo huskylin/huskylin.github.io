@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Leaflet讀取GeoJSON檔 | 工程師都是中二病!</title>
+  <meta name="description" content="Leaflet 讀取 GeoJSON 檔透過在地圖上把台灣縣市地區框選起來並且點擊後會有 popup 提示該地區的縣市名稱練習 Leaflet 的一些操作 起步先照著官網教學引入相關文件把初始地圖建出來https:&#x2F;&#x2F;leafletjs.com&#x2F;examples&#x2F;quick-start&#x2F; 12345678&#x2F;&#x2F;  建立 Leaflet 地圖var map &#x3D; L.map(&quot;mapid&quot;);&#x2F;&#x2F;  設">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leaflet讀取GeoJSON檔">
+<meta property="og:url" content="https://huskylin.github.io/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/index.html">
+<meta property="og:site_name" content="工程師都是中二病">
+<meta property="og:description" content="Leaflet 讀取 GeoJSON 檔透過在地圖上把台灣縣市地區框選起來並且點擊後會有 popup 提示該地區的縣市名稱練習 Leaflet 的一些操作 起步先照著官網教學引入相關文件把初始地圖建出來https:&#x2F;&#x2F;leafletjs.com&#x2F;examples&#x2F;quick-start&#x2F; 12345678&#x2F;&#x2F;  建立 Leaflet 地圖var map &#x3D; L.map(&quot;mapid&quot;);&#x2F;&#x2F;  設">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/e8jdeNm.png">
+<meta property="og:image" content="https://i.imgur.com/VWeuBWb.png">
+<meta property="og:image" content="https://i.imgur.com/OIT3Ta1.png">
+<meta property="og:image" content="https://i.imgur.com/HT8HW9s.png">
+<meta property="article:published_time" content="2018-10-07T10:00:22.000Z">
+<meta property="article:modified_time" content="2020-06-14T10:12:53.930Z">
+<meta property="article:author" content="huksylin">
+<meta property="article:tag" content="Leaflet">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/e8jdeNm.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://huskylin.github.io/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">huksylin</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">雜端工程師</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> </small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>隨手記錄學習筆記</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leaflet/" rel="tag">Leaflet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/impala/" rel="tag">impala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 13px;">JavaScript</a> <a href="/tags/Leaflet/" style="font-size: 13px;">Leaflet</a> <a href="/tags/MySQL/" style="font-size: 13px;">MySQL</a> <a href="/tags/Node-js/" style="font-size: 13.5px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Ubuntu/" style="font-size: 13px;">Ubuntu</a> <a href="/tags/hadoop/" style="font-size: 13.5px;">hadoop</a> <a href="/tags/impala/" style="font-size: 13.5px;">impala</a> <a href="/tags/ubuntu/" style="font-size: 13.5px;">ubuntu</a> <a href="/tags/%E9%83%A8%E5%B1%AC/" style="font-size: 14px;">部屬</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" class="title">在Node.JS透過ODBC連接impala完整教學(下)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-17T10:00:22.000Z" itemprop="datePublished">2020-06-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/15/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8A/" class="title">在Node.JS透過ODBC連接impala完整教學(上)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-15T10:00:22.000Z" itemprop="datePublished">2020-06-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" class="title">Ubuntu Server 18.04 離線狀態下安裝 MySQL</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-16T03:35:15.000Z" itemprop="datePublished">2019-07-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" class="title">Leaflet讀取GeoJSON檔</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-10-07T10:00:22.000Z" itemprop="datePublished">2018-10-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" class="title">CSS放大圖片會爆框</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-09-01T10:08:02.000Z" itemprop="datePublished">2018-09-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Leaflet讀取GeoJSON檔" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Leaflet讀取GeoJSON檔
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" class="article-date">
+	  <time datetime="2018-10-07T10:00:22.000Z" itemprop="datePublished">2018-10-07</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="article-tag-link" href="/tags/Leaflet/" rel="tag">Leaflet</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Leaflet-讀取-GeoJSON-檔"><a href="#Leaflet-讀取-GeoJSON-檔" class="headerlink" title="Leaflet 讀取 GeoJSON 檔"></a>Leaflet 讀取 GeoJSON 檔</h1><p>透過<br>在地圖上把台灣縣市地區框選起來<br>並且點擊後會有 popup 提示該地區的縣市名稱<br>練習 Leaflet 的一些操作</p>
+<h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><p>先照著官網教學<br>引入相關文件<br>把初始地圖建出來<br><a href="https://leafletjs.com/examples/quick-start/" target="_blank" rel="noopener">https://leafletjs.com/examples/quick-start/</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  建立 Leaflet 地圖</span></span><br><span class="line"><span class="keyword">var</span> map = L.map(<span class="string">"mapid"</span>);</span><br><span class="line"><span class="comment">//  設定經緯度座標</span></span><br><span class="line">map.setView(<span class="keyword">new</span> L.LatLng(<span class="number">25</span>, <span class="number">121.74739</span>), <span class="number">13</span>);</span><br><span class="line"><span class="comment">//  設定圖資來源</span></span><br><span class="line"><span class="keyword">var</span> osmUrl = <span class="string">"https://&#123;s&#125;.tile.openstreetmap.org/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png"</span>;</span><br><span class="line"><span class="keyword">var</span> osm = <span class="keyword">new</span> L.TileLayer(osmUrl, &#123; <span class="attr">minZoom</span>: <span class="number">3</span>, <span class="attr">maxZoom</span>: <span class="number">16</span> &#125;);</span><br><span class="line">map.addLayer(osm);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/e8jdeNm.png" alt=""></p>
+<h2 id="讀入-GeoJSON-檔"><a href="#讀入-GeoJSON-檔" class="headerlink" title="讀入 GeoJSON 檔"></a>讀入 GeoJSON 檔</h2><p>根據<a href="https://noob.tw/openstreetmap/" target="_blank" rel="noopener">Web 視覺化(四)：建立 OpenStreetMap 地圖</a>提到</p>
+<blockquote>
+<p>Leaflet 無法直接讀取 GeoJSON 檔案，必須先透過 Ajax 等方式下載下來才行。這邊將使用 jQuery 做例子</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.getJSON(<span class="string">"YOURFILE.json"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">r</span>) </span>&#123;</span><br><span class="line">  L.geoJSON(r, &#123; <span class="attr">color</span>: <span class="string">"#333"</span> &#125;).addTo(map);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>這樣就可以讀取 geoJSON</p>
+<h2 id="替區塊著色"><a href="#替區塊著色" class="headerlink" title="替區塊著色"></a>替區塊著色</h2><p>希望讓不同區塊有不同顏色<br>這邊試做一個，把新北市著色</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$.getJSON(<span class="string">"taiwan.json"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">r</span>) </span>&#123;</span><br><span class="line">  L.geoJSON(r, &#123;</span><br><span class="line">    <span class="comment">//  樣式可透過function操作</span></span><br><span class="line">    style: <span class="function"><span class="keyword">function</span> (<span class="params">feature</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (feature.properties.COUNTYID == <span class="number">65</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(feature.properties.NAME_2014);</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="attr">color</span>: <span class="string">"#4f45c0"</span> &#125;;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="attr">color</span>: <span class="string">"#444444"</span> &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    onEachFeature: onEachFeature,</span><br><span class="line">  &#125;).addTo(map);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/VWeuBWb.png" alt=""></p>
+<h2 id="點擊區塊彈出提示"><a href="#點擊區塊彈出提示" class="headerlink" title="點擊區塊彈出提示"></a>點擊區塊彈出提示</h2><p>這邊希望該縣市區塊後會彈出提示的視窗<br>這邊的 NAME_2014 是該資料中的 properties 有這個 NAME_2014 屬性<br>裡面是該縣市地區的名字</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  綁定每個feature做Popup，可以視資料有什麼properties來決定</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onEachFeature</span>(<span class="params">feature, layer</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (feature.properties &amp;&amp; feature.properties.NAME_2014) &#123;</span><br><span class="line">    layer.bindPopup(feature.properties.NAME_2014);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/OIT3Ta1.png" alt=""></p>
+<p>另外再加入官網範例中<br>點地圖的其他位置後<br>顯示座標位置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> popup = L.popup();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onMapClick</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  popup</span><br><span class="line">    .setLatLng(e.latlng)</span><br><span class="line">    .setContent(<span class="string">"You clicked the map at "</span> + e.latlng.toString())</span><br><span class="line">    .openOn(map);</span><br><span class="line">&#125;</span><br><span class="line">map.on(<span class="string">"click"</span>, onMapClick);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/HT8HW9s.png" alt=""></p>
+<h2 id="其他延伸"><a href="#其他延伸" class="headerlink" title="其他延伸"></a>其他延伸</h2><p>如果想要自己繪製<br>可以使用<a href="http://geojson.io" target="_blank" rel="noopener">geojson.io</a>的服務</p>
+<h2 id="資料來源"><a href="#資料來源" class="headerlink" title="資料來源"></a>資料來源</h2><p><a href="https://sheethub.com/ronnywang/%E4%B8%AD%E8%8F%AF%E6%B0%91%E5%9C%8B%E7%B8%A3%E5%B8%82" target="_blank" rel="noopener">中華民國縣市的 geojson 檔</a><br><a href="https://leafletjs.com/examples/geojson/" target="_blank" rel="noopener">Leaflet 對 GeoJSON 的官方說明</a><br><a href="https://www.youtube.com/watch?v=fDfkjx-VhLI&list=PL4TUtpN0YlFK3YRuJIS0KIxalBGJ4eqIR" target="_blank" rel="noopener">老外教學影片</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://huskylin.github.io/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" title="Leaflet讀取GeoJSON檔" target="_blank" rel="external">https://huskylin.github.io/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">huksylin</span><small class="ml-1x">雜端工程師</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/07/16/Ubuntu-Server-18-04-%E9%9B%A2%E7%B7%9A%E7%8B%80%E6%85%8B%E4%B8%8B%E5%AE%89%E8%A3%9D-MySQL/" title="Ubuntu Server 18.04 離線狀態下安裝 MySQL"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" title="CSS放大圖片會爆框"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/huskylin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+    <script defer>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://huskylin.github.io/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/';
+        
+        this.page.identifier = 'Leaflet讀取GeoJSON檔';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + '' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>
