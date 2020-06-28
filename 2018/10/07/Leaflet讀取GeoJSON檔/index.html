@@ -18,19 +18,19 @@
   
   
   <title>Leaflet讀取GeoJSON檔 | 工程師都是中二病!</title>
-  <meta name="description" content="Leaflet 讀取 GeoJSON 檔透過在地圖上把台灣縣市地區框選起來並且點擊後會有 popup 提示該地區的縣市名稱練習 Leaflet 的一些操作 起步先照著官網教學引入相關文件把初始地圖建出來https:&#x2F;&#x2F;leafletjs.com&#x2F;examples&#x2F;quick-start&#x2F; 12345678&#x2F;&#x2F;  建立 Leaflet 地圖var map &#x3D; L.map(&quot;mapid&quot;);&#x2F;&#x2F;  設">
+  <meta name="description" content="Leaflet 讀取 GeoJSON 檔透過在地圖上把台灣縣市地區框選起來並且點擊後會有 popup 提示該地區的縣市名稱練習 Leaflet 的一些操作 起步先照著官網教學引入相關文件把初始地圖建出來https:&#x2F;&#x2F;leafletjs.com&#x2F;examples&#x2F;quick-start&#x2F; &#x2F;&#x2F;  建立 Leaflet 地圖 var map &#x3D; L.map(&quot;mapid&quot;); &#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leaflet讀取GeoJSON檔">
 <meta property="og:url" content="https://huskylin.github.io/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/index.html">
 <meta property="og:site_name" content="工程師都是中二病">
-<meta property="og:description" content="Leaflet 讀取 GeoJSON 檔透過在地圖上把台灣縣市地區框選起來並且點擊後會有 popup 提示該地區的縣市名稱練習 Leaflet 的一些操作 起步先照著官網教學引入相關文件把初始地圖建出來https:&#x2F;&#x2F;leafletjs.com&#x2F;examples&#x2F;quick-start&#x2F; 12345678&#x2F;&#x2F;  建立 Leaflet 地圖var map &#x3D; L.map(&quot;mapid&quot;);&#x2F;&#x2F;  設">
+<meta property="og:description" content="Leaflet 讀取 GeoJSON 檔透過在地圖上把台灣縣市地區框選起來並且點擊後會有 popup 提示該地區的縣市名稱練習 Leaflet 的一些操作 起步先照著官網教學引入相關文件把初始地圖建出來https:&#x2F;&#x2F;leafletjs.com&#x2F;examples&#x2F;quick-start&#x2F; &#x2F;&#x2F;  建立 Leaflet 地圖 var map &#x3D; L.map(&quot;mapid&quot;); &#x2F;">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/e8jdeNm.png">
 <meta property="og:image" content="https://i.imgur.com/VWeuBWb.png">
 <meta property="og:image" content="https://i.imgur.com/OIT3Ta1.png">
 <meta property="og:image" content="https://i.imgur.com/HT8HW9s.png">
 <meta property="article:published_time" content="2018-10-07T10:00:22.000Z">
-<meta property="article:modified_time" content="2020-06-14T10:12:53.930Z">
+<meta property="article:modified_time" content="2020-06-28T09:19:21.981Z">
 <meta property="article:author" content="huksylin">
 <meta property="article:tag" content="Leaflet">
 <meta property="article:tag" content="JavaScript">
@@ -42,7 +42,7 @@
     <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
   
   
 <link rel="stylesheet" href="/css/style.css">
@@ -125,52 +125,12 @@
         </li>
         
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories">
-            
-            <i class="icon icon-folder"></i>
-            
-            <span class="menu-title">Categories</span>
-          </a>
-        </li>
-        
-        
         <li class="menu-item menu-item-tags">
           <a href="/tags">
             
             <i class="icon icon-tags"></i>
             
             <span class="menu-title">Tags</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-repository">
-          <a href="/repository">
-            
-            <i class="icon icon-project"></i>
-            
-            <span class="menu-title">Repository</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-books">
-          <a href="/books">
-            
-            <i class="icon icon-book-fill"></i>
-            
-            <span class="menu-title">Books</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-links">
-          <a href="/links">
-            
-            <i class="icon icon-friendship"></i>
-            
-            <span class="menu-title">Links</span>
           </a>
         </li>
         
@@ -219,7 +179,7 @@
   <div class="widget">
     <h3 class="widget-title">Tags</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leaflet/" rel="tag">Leaflet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/impala/" rel="tag">impala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leaflet/" rel="tag">Leaflet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/impala/" rel="tag">impala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -229,7 +189,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 13px;">JavaScript</a> <a href="/tags/Leaflet/" style="font-size: 13px;">Leaflet</a> <a href="/tags/MySQL/" style="font-size: 13px;">MySQL</a> <a href="/tags/Node-js/" style="font-size: 13.5px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Ubuntu/" style="font-size: 13px;">Ubuntu</a> <a href="/tags/hadoop/" style="font-size: 13.5px;">hadoop</a> <a href="/tags/impala/" style="font-size: 13.5px;">impala</a> <a href="/tags/ubuntu/" style="font-size: 13.5px;">ubuntu</a> <a href="/tags/%E9%83%A8%E5%B1%AC/" style="font-size: 14px;">部屬</a>
+      <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 13px;">JavaScript</a> <a href="/tags/Leaflet/" style="font-size: 13px;">Leaflet</a> <a href="/tags/MySQL/" style="font-size: 13.5px;">MySQL</a> <a href="/tags/Node-js/" style="font-size: 13.5px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/Ubuntu/" style="font-size: 13px;">Ubuntu</a> <a href="/tags/hadoop/" style="font-size: 13.5px;">hadoop</a> <a href="/tags/impala/" style="font-size: 13.5px;">impala</a> <a href="/tags/ubuntu/" style="font-size: 13.5px;">ubuntu</a> <a href="/tags/%E9%83%A8%E5%B1%AC/" style="font-size: 14px;">部屬</a>
     </div>
   </div>
 
@@ -238,7 +198,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -250,6 +210,31 @@
     <div class="widget-body">
       <ul class="recent-post-list list-unstyled ">
         
+          <li>
+            
+            <div class="item-thumb">
+              <a href="/2020/06/28/MySQL-%E5%9C%A8%E6%AF%8F%E5%80%8B%E7%BE%A4%E7%B5%84%E4%B8%AD%E5%8F%96-N-%E7%AD%86%E8%B3%87%E6%96%99-Get-1-N-Results-From-Each-Group/" class="thumb">
+    
+    
+        <span class="thumb-image thumb-none"></span>
+    
+</a>
+
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/28/MySQL-%E5%9C%A8%E6%AF%8F%E5%80%8B%E7%BE%A4%E7%B5%84%E4%B8%AD%E5%8F%96-N-%E7%AD%86%E8%B3%87%E6%96%99-Get-1-N-Results-From-Each-Group/" class="title">MySQL 在每個群組中取 N 筆資料 ( Get 1...N Results From Each Group )</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-28T07:27:47.000Z" itemprop="datePublished">2020-06-28</time>
+              </p>
+            </div>
+          </li>
+          
           <li>
             
             <div class="item-thumb">
@@ -350,31 +335,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-thumb">
-              <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" class="thumb">
-    
-    
-        <span class="thumb-image thumb-none"></span>
-    
-</a>
-
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" class="title">CSS放大圖片會爆框</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2018-09-01T10:08:02.000Z" itemprop="datePublished">2018-09-01</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -419,33 +379,69 @@
 
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/#comments" class="article-comment-link">Comments</a></span>
         
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 480(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 2(minutes)</span>
+	
+
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <h1 id="Leaflet-讀取-GeoJSON-檔"><a href="#Leaflet-讀取-GeoJSON-檔" class="headerlink" title="Leaflet 讀取 GeoJSON 檔"></a>Leaflet 讀取 GeoJSON 檔</h1><p>透過<br>在地圖上把台灣縣市地區框選起來<br>並且點擊後會有 popup 提示該地區的縣市名稱<br>練習 Leaflet 的一些操作</p>
 <h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><p>先照著官網教學<br>引入相關文件<br>把初始地圖建出來<br><a href="https://leafletjs.com/examples/quick-start/" target="_blank" rel="noopener">https://leafletjs.com/examples/quick-start/</a></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  建立 Leaflet 地圖</span></span><br><span class="line"><span class="keyword">var</span> map = L.map(<span class="string">"mapid"</span>);</span><br><span class="line"><span class="comment">//  設定經緯度座標</span></span><br><span class="line">map.setView(<span class="keyword">new</span> L.LatLng(<span class="number">25</span>, <span class="number">121.74739</span>), <span class="number">13</span>);</span><br><span class="line"><span class="comment">//  設定圖資來源</span></span><br><span class="line"><span class="keyword">var</span> osmUrl = <span class="string">"https://&#123;s&#125;.tile.openstreetmap.org/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png"</span>;</span><br><span class="line"><span class="keyword">var</span> osm = <span class="keyword">new</span> L.TileLayer(osmUrl, &#123; <span class="attr">minZoom</span>: <span class="number">3</span>, <span class="attr">maxZoom</span>: <span class="number">16</span> &#125;);</span><br><span class="line">map.addLayer(osm);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="JavaScript">//  建立 Leaflet 地圖
+var map = L.map(&quot;mapid&quot;);
+//  設定經緯度座標
+map.setView(new L.LatLng(25, 121.74739), 13);
+//  設定圖資來源
+var osmUrl = &quot;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&quot;;
+var osm = new L.TileLayer(osmUrl, { minZoom: 3, maxZoom: 16 });
+map.addLayer(osm);</code></pre>
 <p><img src="https://i.imgur.com/e8jdeNm.png" alt=""></p>
 <h2 id="讀入-GeoJSON-檔"><a href="#讀入-GeoJSON-檔" class="headerlink" title="讀入 GeoJSON 檔"></a>讀入 GeoJSON 檔</h2><p>根據<a href="https://noob.tw/openstreetmap/" target="_blank" rel="noopener">Web 視覺化(四)：建立 OpenStreetMap 地圖</a>提到</p>
 <blockquote>
 <p>Leaflet 無法直接讀取 GeoJSON 檔案，必須先透過 Ajax 等方式下載下來才行。這邊將使用 jQuery 做例子</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.getJSON(<span class="string">"YOURFILE.json"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">r</span>) </span>&#123;</span><br><span class="line">  L.geoJSON(r, &#123; <span class="attr">color</span>: <span class="string">"#333"</span> &#125;).addTo(map);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="JavaScript">$.getJSON(&quot;YOURFILE.json&quot;, function (r) {
+  L.geoJSON(r, { color: &quot;#333&quot; }).addTo(map);
+});</code></pre>
 <p>這樣就可以讀取 geoJSON</p>
 <h2 id="替區塊著色"><a href="#替區塊著色" class="headerlink" title="替區塊著色"></a>替區塊著色</h2><p>希望讓不同區塊有不同顏色<br>這邊試做一個，把新北市著色</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$.getJSON(<span class="string">"taiwan.json"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">r</span>) </span>&#123;</span><br><span class="line">  L.geoJSON(r, &#123;</span><br><span class="line">    <span class="comment">//  樣式可透過function操作</span></span><br><span class="line">    style: <span class="function"><span class="keyword">function</span> (<span class="params">feature</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (feature.properties.COUNTYID == <span class="number">65</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(feature.properties.NAME_2014);</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="attr">color</span>: <span class="string">"#4f45c0"</span> &#125;;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="attr">color</span>: <span class="string">"#444444"</span> &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    onEachFeature: onEachFeature,</span><br><span class="line">  &#125;).addTo(map);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="JavaScript">$.getJSON(&quot;taiwan.json&quot;, function (r) {
+  L.geoJSON(r, {
+    //  樣式可透過function操作
+    style: function (feature) {
+      if (feature.properties.COUNTYID == 65) {
+        console.log(feature.properties.NAME_2014);
+        return { color: &quot;#4f45c0&quot; };
+      } else {
+        return { color: &quot;#444444&quot; };
+      }
+    },
+    onEachFeature: onEachFeature,
+  }).addTo(map);
+});</code></pre>
 <p><img src="https://i.imgur.com/VWeuBWb.png" alt=""></p>
 <h2 id="點擊區塊彈出提示"><a href="#點擊區塊彈出提示" class="headerlink" title="點擊區塊彈出提示"></a>點擊區塊彈出提示</h2><p>這邊希望該縣市區塊後會彈出提示的視窗<br>這邊的 NAME_2014 是該資料中的 properties 有這個 NAME_2014 屬性<br>裡面是該縣市地區的名字</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  綁定每個feature做Popup，可以視資料有什麼properties來決定</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onEachFeature</span>(<span class="params">feature, layer</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (feature.properties &amp;&amp; feature.properties.NAME_2014) &#123;</span><br><span class="line">    layer.bindPopup(feature.properties.NAME_2014);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="JavaScript">//  綁定每個feature做Popup，可以視資料有什麼properties來決定
+function onEachFeature(feature, layer) {
+  if (feature.properties &amp;&amp; feature.properties.NAME_2014) {
+    layer.bindPopup(feature.properties.NAME_2014);
+  }
+}</code></pre>
 <p><img src="https://i.imgur.com/OIT3Ta1.png" alt=""></p>
 <p>另外再加入官網範例中<br>點地圖的其他位置後<br>顯示座標位置</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> popup = L.popup();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onMapClick</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  popup</span><br><span class="line">    .setLatLng(e.latlng)</span><br><span class="line">    .setContent(<span class="string">"You clicked the map at "</span> + e.latlng.toString())</span><br><span class="line">    .openOn(map);</span><br><span class="line">&#125;</span><br><span class="line">map.on(<span class="string">"click"</span>, onMapClick);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="JavaScript">var popup = L.popup();
+function onMapClick(e) {
+  popup
+    .setLatLng(e.latlng)
+    .setContent(&quot;You clicked the map at &quot; + e.latlng.toString())
+    .openOn(map);
+}
+map.on(&quot;click&quot;, onMapClick);</code></pre>
 <p><img src="https://i.imgur.com/HT8HW9s.png" alt=""></p>
 <h2 id="其他延伸"><a href="#其他延伸" class="headerlink" title="其他延伸"></a>其他延伸</h2><p>如果想要自己繪製<br>可以使用<a href="http://geojson.io" target="_blank" rel="noopener">geojson.io</a>的服務</p>
 <h2 id="資料來源"><a href="#資料來源" class="headerlink" title="資料來源"></a>資料來源</h2><p><a href="https://sheethub.com/ronnywang/%E4%B8%AD%E8%8F%AF%E6%B0%91%E5%9C%8B%E7%B8%A3%E5%B8%82" target="_blank" rel="noopener">中華民國縣市的 geojson 檔</a><br><a href="https://leafletjs.com/examples/geojson/" target="_blank" rel="noopener">Leaflet 對 GeoJSON 的官方說明</a><br><a href="https://www.youtube.com/watch?v=fDfkjx-VhLI&list=PL4TUtpN0YlFK3YRuJIS0KIxalBGJ4eqIR" target="_blank" rel="noopener">老外教學影片</a></p>
@@ -453,7 +449,7 @@
       
     </div>
     <div class="article-footer">
-      <blockquote class="mt-2x">
+      <!-- <blockquote class="mt-2x">
   <ul class="post-copyright list-unstyled">
     
     <li class="post-copyright-link hidden-xs">
@@ -465,7 +461,7 @@
       <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
     </li>
   </ul>
-</blockquote>
+</blockquote> -->
 
 
 <div class="panel panel-default panel-badger">
@@ -549,6 +545,10 @@
         	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
         </div>
     </div>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/tomorrow-night-eighties.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </footer>
   <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script>
@@ -601,7 +601,7 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + '' + '.disqus.com/embed.js';
+        s.src = '//' + 'ha47' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
