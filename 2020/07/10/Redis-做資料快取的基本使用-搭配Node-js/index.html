@@ -17,23 +17,25 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>CSS放大圖片會爆框 | 工程師都是中二病!</title>
-  <meta name="description" content="初步想法想要實作一個滑鼠放上去時會放大圖片簡單的效果使用到的技巧  :hover Selectors(選擇器)用來選擇滑鼠指標經過在上面時的元素 transform: scale()transform 屬性裡，用來縮放元素大小  這兩個加起來就可以做出上述的效果不過被選擇到放大後的圖片會爆出框框這時候就需要加上overflow: hidden當超出邊界範圍時，將多餘的部分隱藏起來不顯示 問題原本以">
+  <title>Redis 做資料快取的基本使用 (搭配Node.js) | 工程師都是中二病!</title>
+  <meta name="description" content="Redis 做資料快取的基本使用 (搭配Node.js)背景有些需要耗費大量運算的結果如果能夠在伺服器端做快取可以對效能提升很有幫助先看這次的結果左邊為原始情況，右邊為 Redis 快取後(極端案例? T__T 安裝已經有安裝或是只是想看介紹的可以跳過這部分喔~ Redis Server建議採用官網這種下載壓縮檔再安裝的方式不然直接用 apt-get 常常預設的不是最新版本https:&#x2F;&#x2F;redi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSS放大圖片會爆框">
-<meta property="og:url" content="https://huskylin.github.io/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/index.html">
+<meta property="og:title" content="Redis 做資料快取的基本使用 (搭配Node.js)">
+<meta property="og:url" content="https://huskylin.github.io/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/index.html">
 <meta property="og:site_name" content="工程師都是中二病">
-<meta property="og:description" content="初步想法想要實作一個滑鼠放上去時會放大圖片簡單的效果使用到的技巧  :hover Selectors(選擇器)用來選擇滑鼠指標經過在上面時的元素 transform: scale()transform 屬性裡，用來縮放元素大小  這兩個加起來就可以做出上述的效果不過被選擇到放大後的圖片會爆出框框這時候就需要加上overflow: hidden當超出邊界範圍時，將多餘的部分隱藏起來不顯示 問題原本以">
+<meta property="og:description" content="Redis 做資料快取的基本使用 (搭配Node.js)背景有些需要耗費大量運算的結果如果能夠在伺服器端做快取可以對效能提升很有幫助先看這次的結果左邊為原始情況，右邊為 Redis 快取後(極端案例? T__T 安裝已經有安裝或是只是想看介紹的可以跳過這部分喔~ Redis Server建議採用官網這種下載壓縮檔再安裝的方式不然直接用 apt-get 常常預設的不是最新版本https:&#x2F;&#x2F;redi">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/Bt5K9qX.gif">
-<meta property="article:published_time" content="2018-09-01T10:08:02.000Z">
-<meta property="article:modified_time" content="2020-06-28T09:15:57.653Z">
+<meta property="og:image" content="https://i.imgur.com/cauSYoG.png">
+<meta property="og:image" content="https://media.giphy.com/media/3oEduNF7DlpxgcHVJe/giphy.gif">
+<meta property="article:published_time" content="2020-07-10T10:11:48.000Z">
+<meta property="article:modified_time" content="2020-07-18T10:12:57.897Z">
 <meta property="article:author" content="huskylin">
-<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="部屬">
+<meta property="article:tag" content="Node.js">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/Bt5K9qX.gif">
+<meta name="twitter:image" content="https://i.imgur.com/cauSYoG.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://huskylin.github.io/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/index.html">
+  <link rel="canonical" href="https://huskylin.github.io/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/index.html">
   
     <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
   
@@ -344,14 +346,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-CSS放大圖片會爆框" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-Redis-做資料快取的基本使用-搭配Node-js" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      CSS放大圖片會爆框
+      Redis 做資料快取的基本使用 (搭配Node.js)
     </h1>
   
 
@@ -359,53 +361,170 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" class="article-date">
-	  <time datetime="2018-09-01T10:08:02.000Z" itemprop="datePublished">2018-09-01</time>
+	<a href="/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/" class="article-date">
+	  <time datetime="2020-07-10T10:11:48.000Z" itemprop="datePublished">2020-07-10</time>
 	</a>
 </span>
         
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/CSS/" rel="tag">CSS</a>
+	<a class="article-tag-link" href="/tags/Node-js/" rel="tag">Node.js</a>, <a class="article-tag-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 263(words)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.3k(words)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 1(minutes)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 5(minutes)</span>
 	
 
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="初步想法"><a href="#初步想法" class="headerlink" title="初步想法"></a>初步想法</h2><p>想要實作一個滑鼠放上去時會放大圖片簡單的效果<br>使用到的技巧</p>
-<ol>
-<li><code>:hover Selectors(選擇器)</code><br>用來選擇滑鼠指標經過在上面時的元素</li>
-<li><code>transform: scale()</code><br>transform 屬性裡，用來縮放元素大小</li>
-</ol>
-<p>這兩個加起來就可以做出上述的效果<br>不過被選擇到放大後的圖片會爆出框框<br>這時候就需要加上<br><code>overflow: hidden</code><br>當超出邊界範圍時，將多餘的部分隱藏起來不顯示</p>
-<h2 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h2><p>原本以為到這邊就可以成功將效果呈現<br>但是卻發現會因為 padding 的間距<br>讓圖片放大的範圍有了”亂長大的空間”</p>
-<h2 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h2><p>後來在圖片外面多包一個 div<br>並將 overflow: hidden 寫在裡面<br>文字與圖片間的 padding 就不會給圖片亂長大的空間了</p>
-<pre><code class="CSS">.col-grid {
-  max-width: 450px;
-  overflow: hidden;
-  img {
-    max-width: 450px;
-    &amp;:hover {
-      transform: scale(1.1);
-      transition: 0.5s;
+        <h1 id="Redis-做資料快取的基本使用-搭配Node-js"><a href="#Redis-做資料快取的基本使用-搭配Node-js" class="headerlink" title="Redis 做資料快取的基本使用 (搭配Node.js)"></a>Redis 做資料快取的基本使用 (搭配Node.js)</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>有些需要耗費大量運算的結果<br>如果能夠在伺服器端做快取<br>可以對效能提升很有幫助<br>先看這次的結果<br><img src="https://i.imgur.com/cauSYoG.png" alt=""><br>左邊為原始情況，右邊為 Redis 快取後<br>(極端案例? T__T</p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>已經有安裝<br>或是只是想看介紹的可以跳過這部分喔~</p>
+<h3 id="Redis-Server"><a href="#Redis-Server" class="headerlink" title="Redis Server"></a>Redis Server</h3><p>建議採用官網這種下載壓縮檔再安裝的方式<br>不然直接用 apt-get 常常預設的不是最新版本<br><a href="https://redis.io/download#installation" target="_blank" rel="noopener">https://redis.io/download#installation</a></p>
+<pre><code class="Bash">$ wget http://download.redis.io/releases/redis-6.0.5.tar.gz
+$ tar xzf redis-6.0.5.tar.gz
+$ cd redis-6.0.5
+$ make</code></pre>
+<p>在背景啟動 redis-server </p>
+<pre><code class="Bash">$ src/redis-server --daemonize yes</code></pre>
+<p>並且測試一下功能運作正常</p>
+<pre><code class="Bash">$ redis&gt; set foo bar
+$ OK
+$ redis&gt; get foo
+$ &quot;bar&quot;</code></pre>
+<h3 id="Redis-Client"><a href="#Redis-Client" class="headerlink" title="Redis Client"></a>Redis Client</h3><p>我自己是使用 Node.js<br>所以先安裝 node-redis 套件<br><a href="https://github.com/NodeRedis/node-redis" target="_blank" rel="noopener">https://github.com/NodeRedis/node-redis</a></p>
+<pre><code class="Bash">npm install redis</code></pre>
+<p>Github 上的範例也很簡潔清楚</p>
+<pre><code class="Javascript">&lt;!-- 引入模組 --&gt;
+const redis = require(&quot;redis&quot;);
+const client = redis.createClient();
+&lt;!-- 連接 redis server --&gt;
+client.on(&quot;error&quot;, function(error) {
+  console.error(error);
+});
+&lt;!-- 設置與取得 key / value --&gt;
+client.set(&quot;key&quot;, &quot;value&quot;, redis.print);
+client.get(&quot;key&quot;, redis.print);</code></pre>
+<h2 id="實際使用"><a href="#實際使用" class="headerlink" title="實際使用"></a>實際使用</h2><h3 id="使用快取的邏輯"><a href="#使用快取的邏輯" class="headerlink" title="使用快取的邏輯"></a>使用快取的邏輯</h3><ul>
+<li>查詢資料時，查看是否存在於快取之中<ul>
+<li>是，則<strong>從快取中取得</strong>資料<ul>
+<li>直接回傳給前端</li>
+</ul>
+</li>
+<li>否，則<strong>從資料庫中</strong>查詢<ul>
+<li>回傳給前端</li>
+<li>並且寫入快取之中</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>更新資料時，查看是否存在於快取之中<ul>
+<li>是，則一併更新快取資料</li>
+<li>否，則寫入快取中<h3 id="轉換為程式碼"><a href="#轉換為程式碼" class="headerlink" title="轉換為程式碼"></a>轉換為程式碼</h3><pre><code class="Javascript">// 取得圖表資料
+router.get(&#39;/someData&#39;, (req, res) =&gt; {
+// 取得請求參數並傳換成 key
+const parm1 = req.query.parm1
+const parm2 = req.query.parm2
+const parm3 = req.query.parm3
+const key = (`someData:${parm1}/${parm2}/${parm3}`).trim()
+const expireDay = 60 * 60 * 24;
+// 檢查資料是否能夠從快取中取得
+redisClient.get(key, (err, rawdata) =&gt; {
+// 可以做錯誤處理
+if (err) {
+console.log(err)
+}
+// 如果快取中沒有這筆資料，會回傳 null 
+if (!!rawdata) {
+// redis 無法儲存 Javascript 的 Object
+// 這邊是直接存成 string
+// 所以需要轉換
+const data = JSON.parse(rawdata);
+return res.json(data);
+}
+// 這邊是呼叫你撈資料庫的 function
+yourSQL.queryData(parm1, parm2, parm3)
+.then(results =&gt; {
+  // 寫入快取，並且設置有效期限為一天
+  redisClient.set(key, JSON.stringify(results), &#39;EX&#39;, expireDay, err =&gt; {
+    if (err) {
+      console.log(err)
     }
-  }
-}</code></pre>
-<h2 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h2><p>左邊為目標效果，右邊是有非預期爆框的效果<br><img src="https://i.imgur.com/Bt5K9qX.gif" alt=""></p>
+  });
+  // 回傳資料
+  res.json(results);
+})
+.catch(err =&gt; {
+  // 資料庫的查詢的錯誤處理
+  console.log(&quot;not connected due to error: &quot; + err);
+  res.status(500).send(&#39;Can not connect to DB&#39;);
+});
+});
+});</code></pre>
+<h2 id="值得注意的地方"><a href="#值得注意的地方" class="headerlink" title="值得注意的地方"></a>值得注意的地方</h2></li>
+</ul>
+</li>
+</ul>
+<h3 id="key-的取名"><a href="#key-的取名" class="headerlink" title="key 的取名"></a>key 的取名</h3><p>因為 key 的長度會影響到 Redis 查詢的效能<br>所以設計好的 key 是需要的<br>關乎取名的東西要複雜都可以很複雜<br>但我覺得最大原則就是內部溝通好、好管理就好<br>可以參考 SatckOverflow 上有人講到常見的命名方式<br><a href="https://stackoverflow.com/questions/6965451/redis-key-naming-conventions" target="_blank" rel="noopener">redis-key-naming-conventions</a></p>
+<blockquote>
+<p>We use a colon (:) as namespace separator and a hash (#) for id-parts of keys, e.g.:<br>logistics:building#23</p>
+</blockquote>
+<h3 id="value-的資料型態"><a href="#value-的資料型態" class="headerlink" title="value 的資料型態"></a>value 的資料型態</h3><p>Redis 目前有五種資料型態:</p>
+<ul>
+<li>string</li>
+<li>hash</li>
+<li>list</li>
+<li>set</li>
+<li>zset (sorted set)</li>
+</ul>
+<p>我這邊原本是想直接把資料庫撈出來的結果 (Object型態) 存入<br>但是因為 Redis 並沒有這種資料型態<br>所以就直接粗暴的轉成字串<br>存入與取出時透過<code>JSON.stringify</code>, <code>JSON.parse</code> 來處理<br><img src="https://media.giphy.com/media/3oEduNF7DlpxgcHVJe/giphy.gif" alt=""><br>應該有更好的做法啦</p>
+<h3 id="有效期限的設置"><a href="#有效期限的設置" class="headerlink" title="有效期限的設置"></a>有效期限的設置</h3><ul>
+<li>如果不是需要常駐的資料<br>  盡量都要設置有效期限<br>  (需要常駐的資料也應該要記得存於實體資料庫中)</li>
+<li>設置合理的有效期限<ul>
+<li>太長，占用記憶體空間</li>
+<li>太短，容易重覆讀寫浪費效能</li>
+</ul>
+</li>
+<li>在範例的 Node.js 中<br>  語法為在 set 方法裡傳入參數 <code>&#39;EX&#39;, expire</code><pre><code class="Javascirpt">  redisClient.set(key, value, &#39;EX&#39;, expire, err =&gt; {
+      ...
+  });</code></pre>
+</li>
+</ul>
+<h3 id="超過記憶體上限後的處理、淘汰機制"><a href="#超過記憶體上限後的處理、淘汰機制" class="headerlink" title="超過記憶體上限後的處理、淘汰機制"></a>超過記憶體上限後的處理、淘汰機制</h3><ul>
+<li>noeviction:<br>  即使記憶體上達到上限，也不置換 key-value<br>  也就是<strong>記憶體滿了之後，只能讀取資料，不能寫入</strong><br>  若再新增資料會 return error<blockquote>
+<p><strong>這是預設值，我認為不適用於多數場合，所應該要去設定成下列其他的</strong></p>
+</blockquote>
+</li>
+<li>allkeys-lru:<br>  優先刪除掉<strong>最近最少使用</strong>的key，用以保存新數據<blockquote>
+<p>LRU = least recently used<br>適用多數場合</p>
+</blockquote>
+</li>
+<li>volatile-lru:<br>  只從有設置<strong>有效期限</strong> (expire) 的資料中<br>  選擇<strong>最近最少使用</strong>的 key-value 進行刪除<blockquote>
+<p>與 allkeys-lru 的差別在於<br>一個從<strong>全部</strong>的 key 中來選擇刪除<br>一個是只會從<strong>有有效期限</strong>的 key 來選擇刪除</p>
+</blockquote>
+</li>
+<li>allkeys-random:<br>  從<strong>全部</strong>的 key 中<br>  <strong>隨機選擇</strong>一些進行刪除</li>
+<li>volatile-random:<br>  只從有設置<strong>有效期限</strong> (expire) key 中<br>  <strong>隨機選擇</strong>一些 key 進行刪除</li>
+<li>volatile-ttl:<br>  只從有設置<strong>有效期限</strong> (expire) key 中<br>  選出<strong>剩餘存活時間 (TTL) 最短</strong>的 key 進行刪除<blockquote>
+<p>TTL = Time To Live</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="其他參考資料"><a href="#其他參考資料" class="headerlink" title="其他參考資料"></a>其他參考資料</h3><ul>
+<li><a href="https://medium.com/10coding/node-js-%E4%BD%BF%E7%94%A8-redis-%E5%85%A7%E5%AD%98%E4%BE%86%E5%AD%98%E5%8F%96%E6%9C%AC%E5%9C%B0%E8%B3%87%E6%96%99-9557660196f4" target="_blank" rel="noopener">[Node.js] 使用 Redis 內存來存取本地資料</a></li>
+<li><a href="https://jinguoxing.github.io/redis/2018/10/10/redis-EXPIRE/" target="_blank" rel="noopener">Redis的过期策略及淘汰策略</a></li>
+<li><a href="https://juejin.im/post/5ed5cc9b51882543393c985c" target="_blank" rel="noopener">Redis删除策略和逐出策略</a></li>
+</ul>
 
       
     </div>
@@ -415,7 +534,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://huskylin.github.io/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/" title="CSS放大圖片會爆框" target="_blank" rel="external">https://huskylin.github.io/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/</a>
+      <a href="https://huskylin.github.io/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/" title="Redis 做資料快取的基本使用 (搭配Node.js)" target="_blank" rel="external">https://huskylin.github.io/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -463,13 +582,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2018/10/07/Leaflet%E8%AE%80%E5%8F%96GeoJSON%E6%AA%94/" title="Leaflet讀取GeoJSON檔"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2018/05/13/%E7%94%A8Python%E6%89%93%E9%80%A0FB%E6%8A%BD%E7%8D%8E%E6%A9%9F%EF%BC%8C%E5%B0%87%E5%9B%9E%E8%A6%86%E7%95%99%E8%A8%80%E4%B9%9F%E5%88%97%E5%85%A5%E5%8F%83%E6%8A%BD%E7%8D%8E%E5%96%AE/" title="用Python打造FB抽獎機，將回覆留言也列入參抽獎單"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2020/06/28/MySQL-%E5%9C%A8%E6%AF%8F%E5%80%8B%E7%BE%A4%E7%B5%84%E4%B8%AD%E5%8F%96-N-%E7%AD%86%E8%B3%87%E6%96%99-Get-1-N-Results-From-Each-Group/" title="MySQL 在每個群組中取 N 筆資料 ( Get 1...N Results From Each Group )"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
@@ -556,9 +671,9 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
     <script defer>
     var disqus_config = function () {
         
-            this.page.url = 'https://huskylin.github.io/2018/09/01/CSS%E6%94%BE%E5%A4%A7%E5%9C%96%E7%89%87%E6%9C%83%E7%88%86%E6%A1%86/';
+            this.page.url = 'https://huskylin.github.io/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/';
         
-        this.page.identifier = 'CSS放大圖片會爆框';
+        this.page.identifier = 'Redis-做資料快取的基本使用-搭配Node-js';
     };
     (function() { 
         var d = document, s = d.createElement('script');  

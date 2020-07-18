@@ -17,18 +17,24 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Repositories | 工程師都是中二病!</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Repositories">
-<meta property="og:url" content="https://huskylin.github.io/repository/index.html">
+  <title>Node.js + PM2 設置環境變數，更彈性地開發與部屬 | 工程師都是中二病!</title>
+  <meta name="description" content="Node.js + PM2 設置環境變數，更彈性地開發與部屬背景在使用 node.js 時一定會遇到開發(dev)與生產(production)，甚至更多階段的不同環境可能每一種環境都有不同的設定檔案例如:開發階段要連線到本機的資料庫生產階段要連線到另一台伺服器的資料庫這時候就需要更彈性的來做設定 在 Node.js 設定 config可以針對不同的階段環境來設定各種連線參數例如: const e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js + PM2 設置環境變數，更彈性地開發與部屬">
+<meta property="og:url" content="https://huskylin.github.io/2020/06/18/Node-js-PM2-%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%8C%E6%9B%B4%E5%BD%88%E6%80%A7%E5%9C%B0%E9%96%8B%E7%99%BC%E8%88%87%E9%83%A8%E5%B1%AC/index.html">
 <meta property="og:site_name" content="工程師都是中二病">
+<meta property="og:description" content="Node.js + PM2 設置環境變數，更彈性地開發與部屬背景在使用 node.js 時一定會遇到開發(dev)與生產(production)，甚至更多階段的不同環境可能每一種環境都有不同的設定檔案例如:開發階段要連線到本機的資料庫生產階段要連線到另一台伺服器的資料庫這時候就需要更彈性的來做設定 在 Node.js 設定 config可以針對不同的階段環境來設定各種連線參數例如: const e">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2020-06-28T07:34:49.290Z">
-<meta property="article:modified_time" content="2020-06-28T07:34:49.290Z">
+<meta property="og:image" content="https://media.giphy.com/media/u1k1kpDZSw5sA/giphy.gif">
+<meta property="article:published_time" content="2020-06-18T10:10:00.000Z">
+<meta property="article:modified_time" content="2020-07-18T10:11:22.883Z">
 <meta property="article:author" content="huskylin">
+<meta property="article:tag" content="部屬">
+<meta property="article:tag" content="Node.js">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.giphy.com/media/u1k1kpDZSw5sA/giphy.gif">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://huskylin.github.io/repository/index.html">
+  <link rel="canonical" href="https://huskylin.github.io/2020/06/18/Node-js-PM2-%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%8C%E6%9B%B4%E5%BD%88%E6%80%A7%E5%9C%B0%E9%96%8B%E7%99%BC%E8%88%87%E9%83%A8%E5%B1%AC/index.html">
   
     <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
   
@@ -45,7 +51,7 @@
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 
-<body class="main-center no-sidebar" itemscope itemtype="http://schema.org/WebPage">
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
   <header class="header" itemscope itemtype="http://schema.org/WPHeader">
   <div class="slimContent">
     <div class="navbar-header">
@@ -336,46 +342,206 @@
 </aside>
 
   
-  <main class="main" role="main">
-  <article class="article article-repository article-type-list" itemscope="">
-  <header class="article-header">
-    <h1 itemprop="title">Repositories</h1>
-    <p class="text-muted">I have <span id="repo-count">0</span> projects on Github</p>
-  </header>
-  <div class="article-body">
-    <div class="repo-content">
-      <div class="blankslate">
-        <p>正在加载...</p>
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Node-js-PM2-設置環境變數，更彈性地開發與部屬" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Node.js + PM2 設置環境變數，更彈性地開發與部屬
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/06/18/Node-js-PM2-%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%8C%E6%9B%B4%E5%BD%88%E6%80%A7%E5%9C%B0%E9%96%8B%E7%99%BC%E8%88%87%E9%83%A8%E5%B1%AC/" class="article-date">
+	  <time datetime="2020-06-18T10:10:00.000Z" itemprop="datePublished">2020-06-18</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Node-js/" rel="tag">Node.js</a>, <a class="article-tag-link" href="/tags/%E9%83%A8%E5%B1%AC/" rel="tag">部屬</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/06/18/Node-js-PM2-%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%8C%E6%9B%B4%E5%BD%88%E6%80%A7%E5%9C%B0%E9%96%8B%E7%99%BC%E8%88%87%E9%83%A8%E5%B1%AC/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 686(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 2(minutes)</span>
+	
+
       </div>
     </div>
-  </div>
-</article>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Node-js-PM2-設置環境變數，更彈性地開發與部屬"><a href="#Node-js-PM2-設置環境變數，更彈性地開發與部屬" class="headerlink" title="Node.js + PM2 設置環境變數，更彈性地開發與部屬"></a>Node.js + PM2 設置環境變數，更彈性地開發與部屬</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在使用 node.js 時一定會遇到<br><code>開發(dev)</code>與<code>生產(production)</code>，甚至更多階段的不同環境<br>可能每一種環境都有不同的設定檔案<br>例如:<br>開發階段要連線到本機的資料庫<br>生產階段要連線到另一台伺服器的資料庫<br>這時候就需要更彈性的來做設定</p>
+<h2 id="在-Node-js-設定-config"><a href="#在-Node-js-設定-config" class="headerlink" title="在 Node.js 設定 config"></a>在 Node.js 設定 config</h2><p>可以針對不同的階段環境來設定各種連線參數<br>例如:</p>
+<pre><code class="JavaScript">const env = process.env.NODE_ENV; // &#39;dev&#39; or &#39;prod&#39;
+const configs = {}
+configs.dev = {
+  db: {
+    host: &#39;YourHost1&#39;,
+    port: 3306,
+    user: &quot;YourUser&quot;,
+    password: &#39;yourPassword1&#39;,
+    database: &#39;YourDB1&#39;
+  }
+};
 
+configs.prod = {
+  db: {
+    host: &#39;YourHost2&#39;,
+    port: 3306,
+    user: &quot;YourUser2&quot;,
+    password: &#39;yourPassword2&#39;,
+    database: &#39;YourDB2&#39;
+  }
+}
+
+module.exports = configs[env];</code></pre>
+<p>如此一來 Node.js 就會根據<code>環境變數</code>來 exports 不同的設定</p>
+<h2 id="使用-PM2-來運行-Node-js-時"><a href="#使用-PM2-來運行-Node-js-時" class="headerlink" title="使用 PM2 來運行 Node.js 時"></a>使用 PM2 來運行 Node.js 時</h2><p>PM2 是一個 node 的程序管理器<br>主要功能有<code>自動重啟服務</code>, <code>叢集功能更有效的利用多核CPU</code>等等<br>網路上介紹非常多，可以參考這些連結來看介紹與用法</p>
+<ul>
+<li><a href="https://tn710617.github.io/zh-tw/pm2/" target="_blank" rel="noopener">pm2 - 用法大全</a> </li>
+<li><a href="https://larrylu.blog/nodejs-pm2-cluster-455ffbd7671" target="_blank" rel="noopener">使用 pm2 啟動 Node.js cluster 以提升效能</a></li>
+</ul>
+<p>我主要想分享的是，當我們使用 PM2 時<br><strong>希望在<code>叢集模式(cluster)</code>下運行Node服務，又要設定<code>環境變數</code>時的作法</strong><br>一開始直覺的想法是直接都打在參數</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/43130494/how-to-npm-start-with-pm2-cluster-mode" target="_blank" rel="noopener">how to “npm start” with pm2 cluster mode</a></li>
+<li><a href="https://stackoverflow.com/questions/33656947/passing-environment-variables-to-node-js-using-pm2" target="_blank" rel="noopener">Passing environment variables to node.js using pm2</a></li>
+</ul>
+<p>後來發現比較好的做法，是設置一個<code>PM2的參數設定檔</code><br>(後來才發現其實官方的文件就寫得很清楚了)</p>
+<h2 id="使用-Ecosystem-File"><a href="#使用-Ecosystem-File" class="headerlink" title="使用 Ecosystem File"></a>使用 Ecosystem File</h2><p><a href="https://pm2.keymetrics.io/docs/usage/environment/" target="_blank" rel="noopener">PM2官方文件</a></p>
+<ol>
+<li>先產生一個<code>ecosystem.config.js</code></li>
+<li>設置範例</li>
+</ol>
+<pre><code class="JavaScript">module.exports = {
+  apps : [{
+    name: &quot;app&quot;,
+    script: &quot;./app.js&quot;,
+    env: {
+      NODE_ENV: &quot;development&quot;,
+    },
+    env_production: {
+      NODE_ENV: &quot;production&quot;,
+    }
+  }]
+}</code></pre>
+<ol start="3">
+<li>運行指令</li>
+</ol>
+<pre><code class="Bash">pm2 start ecosystem.config.js --env production</code></pre>
+<p>這裡值得留意的是<br>在上面的例子中，<code>--env</code>這個參數後面接是<code>production</code>而不是<code>env_production</code><br>我原本想說應該是要輸入設定檔的 Object key<br>結果直接失敗，我還不夠難嗎?<br>差點躺在床上蓋著面被抱著自己哭出來</p>
+<p>後來又發現其實在更下面的官方文件<br>又有說明了</p>
+<blockquote>
+<p>Example:</p>
+<pre><code class="bash"># Inject what is declared in env_production
+pm2 start process.json --env production
+
+# Inject what is declared in env_staging
+pm2 restart process.json --env staging</code></pre>
+</blockquote>
+<p>( 害我不能怪官方沒寫清楚了 )<br>( 改怪他怎麼分那麼開好了 QQ )</p>
+<h2 id="廢話時間"><a href="#廢話時間" class="headerlink" title="廢話時間"></a>廢話時間</h2><p>改造完自己的設置<br>是不是覺得自己的Node.js Server變得更進化啦<br><img src="https://media.giphy.com/media/u1k1kpDZSw5sA/giphy.gif" alt="evolution"><br><strong>進化為 Dev &amp; Production 皆可適應的雙棲動物</strong><br>獻唱一首蔡健雅的雙棲動物</p>
+<blockquote>
+<p>很想哭~　哭完無助~</p>
+</blockquote>
+<p>打完收工!</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://huskylin.github.io/2020/06/18/Node-js-PM2-%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%8C%E6%9B%B4%E5%BD%88%E6%80%A7%E5%9C%B0%E9%96%8B%E7%99%BC%E8%88%87%E9%83%A8%E5%B1%AC/" title="Node.js + PM2 設置環境變數，更彈性地開發與部屬" target="_blank" rel="external">https://huskylin.github.io/2020/06/18/Node-js-PM2-%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%8C%E6%9B%B4%E5%BD%88%E6%80%A7%E5%9C%B0%E9%96%8B%E7%99%BC%E8%88%87%E9%83%A8%E5%B1%AC/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">huskylin</span><small class="ml-1x">雜端工程師</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/06/28/MySQL-%E5%9C%A8%E6%AF%8F%E5%80%8B%E7%BE%A4%E7%B5%84%E4%B8%AD%E5%8F%96-N-%E7%AD%86%E8%B3%87%E6%96%99-Get-1-N-Results-From-Each-Group/" title="MySQL 在每個群組中取 N 筆資料 ( Get 1...N Results From Each Group )"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/06/17/%E5%9C%A8Node-JS%E9%80%8F%E9%81%8EODBC%E9%80%A3%E6%8E%A5Impala%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8-%E4%B8%8B/" title="在Node.JS透過ODBC連接impala完整教學(下)"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="facebook,twitter" data-mobile-sites="facebook,twitter"></div>
+    
+  </div>
+  </div>
+</nav>
   
 
 
-
-<!--Github项模版-->
-<script type="text/template" id="list-template">
-  <li class="col-sm-6 col-md-6 col-lg-4">
-    <div class="repo hover-shadow hover-grow">
-      <div class="repo-image geopattern" data-pattern-id="{%=name%}"></div>
-      <h3 class="repo-title"><a href="{%=clone_url%}" target="_blank" rel="external nofollow noopener noreferrer">{%=full_name%}</a></h3>
-      <p class="repo-body">{%=description%}</p>
-      <div class="repo-meta">
-        <span class="meta meta-type pull-left" aria-label="{%=language%} project">{%=language%}</span>
-        <span class="meta meta-star" aria-label="{%=stargazers_count%} stars"><i class="icon icon-star-fill"></i> {%=stargazers_count%}</span>
-        <span class="meta meta-fork" aria-label="{%=forks_count%} forks"><i class="icon icon-code-fork"></i> {%=forks_count%}</span>
-        <span class="meta meta-last-updated" aria-label="最后更新时间：{%=updated_at%}">
-        <i class="icon icon-clock"></i> <time datetime="{%=updated_at%}">{%=updated_at%}</time></span>
-      </div>
-    </div>
-  </li>
-</script>
-<!--获取失败模版-->
-<script type="text/template" id="error-template">
-  <h3>加载失败</h3><p>请刷新或稍后再试...</p>
-</script>
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -433,60 +599,29 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-   <script type="text/javascript">
-var open = function() {
-  var baiduTpl = new Object();
-  var handleTpl = function() {
-    baiduTpl.list = baidu.template("list-template");
-    baiduTpl.error = baidu.template("error-template");
-  };
 
-  var handleGithub = function() {
-    var repoContainer = $('.repo-content');
-    var errorContainer = repoContainer.find(".blankslate");
-    var countContainer = $("#repo-count");
 
-    $.get("https://api.github.com/users/huskylin/repos", function(result) {
-      if (result) {
-        errorContainer.remove();
-        countContainer.text(result.length); //设置项目个数
-        var ul = $("<ul class='repo-list row clearfix'></ul>");
-        result.sort(function(a, b) {
-          return new Date(b.updated_at) - new Date(a.updated_at)
-        }).sort(function(a, b) {
-          var a_start = a.stargazers_count;
-          var b_start = b.stargazers_count;
-          if (a.fork) a_start * 0.5;
-          if (b.fork) b_start * 0.5;
-          return b_start - a_start;
-        }).map(function(repo) {
-          if (!repo.description) repo.description = "";
-          repo.updated_at = repo.updated_at.substring(0, repo.updated_at.lastIndexOf("T"));
-          var html = baiduTpl.list(repo);
-          ul.append(html);
-        })
+   
 
-        repoContainer.append(ul);
-        $(".geopattern").each(function() {
-          $(this).geopattern($(this).data('pattern-id'));
-        });
-      } else {
-        errorContainer.append(baiduTpl.error());
-      }
-    });
-  };
 
-  return {
-    init: function() {
-      handleTpl();
-      handleGithub();
-    }
-  }
-};
-$(open().init);
+
+
+   
+    
+    <script defer>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://huskylin.github.io/2020/06/18/Node-js-PM2-%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%8C%E6%9B%B4%E5%BD%88%E6%80%A7%E5%9C%B0%E9%96%8B%E7%99%BC%E8%88%87%E9%83%A8%E5%B1%AC/';
+        
+        this.page.identifier = 'Node-js-PM2-設置環境變數，更彈性地開發與部屬';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ha47' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-
-
 
 
 
