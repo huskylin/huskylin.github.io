@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://i.imgur.com/cauSYoG.png">
 <meta property="og:image" content="https://media.giphy.com/media/3oEduNF7DlpxgcHVJe/giphy.gif">
 <meta property="article:published_time" content="2020-07-10T10:11:48.000Z">
-<meta property="article:modified_time" content="2020-07-18T10:12:57.897Z">
+<meta property="article:modified_time" content="2020-10-20T16:40:46.107Z">
 <meta property="article:author" content="huskylin">
 <meta property="article:tag" content="部屬">
 <meta property="article:tag" content="Node.js">
@@ -395,7 +395,7 @@
 $ tar xzf redis-6.0.5.tar.gz
 $ cd redis-6.0.5
 $ make</code></pre>
-<p>在背景啟動 redis-server </p>
+<p>在背景啟動 redis-server</p>
 <pre><code class="Bash">$ src/redis-server --daemonize yes</code></pre>
 <p>並且測試一下功能運作正常</p>
 <pre><code class="Bash">$ redis&gt; set foo bar
@@ -405,7 +405,7 @@ $ &quot;bar&quot;</code></pre>
 <h3 id="Redis-Client"><a href="#Redis-Client" class="headerlink" title="Redis Client"></a>Redis Client</h3><p>我自己是使用 Node.js<br>所以先安裝 node-redis 套件<br><a href="https://github.com/NodeRedis/node-redis" target="_blank" rel="noopener">https://github.com/NodeRedis/node-redis</a></p>
 <pre><code class="Bash">npm install redis</code></pre>
 <p>Github 上的範例也很簡潔清楚</p>
-<pre><code class="Javascript">&lt;!-- 引入模組 --&gt;
+<pre><code class="JavaScript">&lt;!-- 引入模組 --&gt;
 const redis = require(&quot;redis&quot;);
 const client = redis.createClient();
 &lt;!-- 連接 redis server --&gt;
@@ -430,52 +430,52 @@ client.get(&quot;key&quot;, redis.print);</code></pre>
 </li>
 <li>更新資料時，查看是否存在於快取之中<ul>
 <li>是，則一併更新快取資料</li>
-<li>否，則寫入快取中<h3 id="轉換為程式碼"><a href="#轉換為程式碼" class="headerlink" title="轉換為程式碼"></a>轉換為程式碼</h3><pre><code class="Javascript">// 取得圖表資料
-router.get(&#39;/someData&#39;, (req, res) =&gt; {
-// 取得請求參數並傳換成 key
-const parm1 = req.query.parm1
-const parm2 = req.query.parm2
-const parm3 = req.query.parm3
-const key = (`someData:${parm1}/${parm2}/${parm3}`).trim()
-const expireDay = 60 * 60 * 24;
-// 檢查資料是否能夠從快取中取得
-redisClient.get(key, (err, rawdata) =&gt; {
-// 可以做錯誤處理
-if (err) {
-console.log(err)
-}
-// 如果快取中沒有這筆資料，會回傳 null 
-if (!!rawdata) {
-// redis 無法儲存 Javascript 的 Object
-// 這邊是直接存成 string
-// 所以需要轉換
-const data = JSON.parse(rawdata);
-return res.json(data);
-}
-// 這邊是呼叫你撈資料庫的 function
-yourSQL.queryData(parm1, parm2, parm3)
-.then(results =&gt; {
-  // 寫入快取，並且設置有效期限為一天
-  redisClient.set(key, JSON.stringify(results), &#39;EX&#39;, expireDay, err =&gt; {
-    if (err) {
-      console.log(err)
-    }
-  });
-  // 回傳資料
-  res.json(results);
-})
-.catch(err =&gt; {
-  // 資料庫的查詢的錯誤處理
-  console.log(&quot;not connected due to error: &quot; + err);
-  res.status(500).send(&#39;Can not connect to DB&#39;);
-});
-});
-});</code></pre>
-<h2 id="值得注意的地方"><a href="#值得注意的地方" class="headerlink" title="值得注意的地方"></a>值得注意的地方</h2></li>
+<li>否，則寫入快取中<h3 id="轉換為程式碼"><a href="#轉換為程式碼" class="headerlink" title="轉換為程式碼"></a>轉換為程式碼</h3></li>
 </ul>
 </li>
 </ul>
-<h3 id="key-的取名"><a href="#key-的取名" class="headerlink" title="key 的取名"></a>key 的取名</h3><p>因為 key 的長度會影響到 Redis 查詢的效能<br>所以設計好的 key 是需要的<br>關乎取名的東西要複雜都可以很複雜<br>但我覺得最大原則就是內部溝通好、好管理就好<br>可以參考 SatckOverflow 上有人講到常見的命名方式<br><a href="https://stackoverflow.com/questions/6965451/redis-key-naming-conventions" target="_blank" rel="noopener">redis-key-naming-conventions</a></p>
+<pre><code class="Javascript">// 取得圖表資料
+router.get(&#39;/someData&#39;, (req, res) =&gt; {
+  // 取得請求參數並傳換成 key
+  const parm1 = req.query.parm1
+  const parm2 = req.query.parm2
+  const parm3 = req.query.parm3
+  const key = (`someData:${parm1}/${parm2}/${parm3}`).trim()
+  const expireDay = 60 * 60 * 24;
+  // 檢查資料是否能夠從快取中取得
+  redisClient.get(key, (err, rawdata) =&gt; {
+    // 可以做錯誤處理
+    if (err) {
+      console.log(err)
+    }
+    // 如果快取中沒有這筆資料，會回傳 null 
+    if (!!rawdata) {
+      // redis 無法儲存 Javascript 的 Object
+      // 這邊是直接存成 string
+      // 所以需要轉換
+      const data = JSON.parse(rawdata);
+      return res.json(data);
+    }
+    // 這邊是呼叫你撈資料庫的 function
+    yourSQL.queryData(parm1, parm2, parm3)
+      .then(results =&gt; {
+        // 寫入快取，並且設置有效期限為一天
+        redisClient.set(key, JSON.stringify(results), &#39;EX&#39;, expireDay, err =&gt; {
+          if (err) {
+            console.log(err)
+          }
+        });
+        // 回傳資料
+        res.json(results);
+      })
+      .catch(err =&gt; {
+        // 資料庫的查詢的錯誤處理
+        console.log(&quot;not connected due to error: &quot; + err);
+        res.status(500).send(&#39;Can not connect to DB&#39;);
+      });
+  });
+});</code></pre>
+<h2 id="值得注意的地方"><a href="#值得注意的地方" class="headerlink" title="值得注意的地方"></a>值得注意的地方</h2><h3 id="key-的取名"><a href="#key-的取名" class="headerlink" title="key 的取名"></a>key 的取名</h3><p>因為 key 的長度會影響到 Redis 查詢的效能<br>所以設計好的 key 是需要的<br>關乎取名的東西要複雜都可以很複雜<br>但我覺得最大原則就是內部溝通好、好管理就好<br>可以參考 SatckOverflow 上有人講到常見的命名方式<br><a href="https://stackoverflow.com/questions/6965451/redis-key-naming-conventions" target="_blank" rel="noopener">redis-key-naming-conventions</a></p>
 <blockquote>
 <p>We use a colon (:) as namespace separator and a hash (#) for id-parts of keys, e.g.:<br>logistics:building#23</p>
 </blockquote>
@@ -495,7 +495,7 @@ yourSQL.queryData(parm1, parm2, parm3)
 <li>太短，容易重覆讀寫浪費效能</li>
 </ul>
 </li>
-<li>在範例的 Node.js 中<br>  語法為在 set 方法裡傳入參數 <code>&#39;EX&#39;, expire</code><pre><code class="Javascirpt">  redisClient.set(key, value, &#39;EX&#39;, expire, err =&gt; {
+<li>在範例的 Node.js 中<br>  語法為在 set 方法裡傳入參數 <code>&#39;EX&#39;, expire</code><pre><code class="JavaScript">  redisClient.set(key, value, &#39;EX&#39;, expire, err =&gt; {
       ...
   });</code></pre>
 </li>
@@ -622,7 +622,7 @@ yourSQL.queryData(parm1, parm2, parm3)
         </div>
     </div>
     <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/tomorrow-night-eighties.min.css">
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/atom-one-dark.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 </footer>
