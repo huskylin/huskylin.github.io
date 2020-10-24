@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://huskylin.github.io/"/>
-  <updated>2020-10-20T16:40:46.107Z</updated>
+  <updated>2020-10-24T15:46:37.993Z</updated>
   <id>https://huskylin.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>好用的AI自動配色工具! 可以直接匯出套用!</title>
+    <link href="https://huskylin.github.io/2020/10/24/%E5%A5%BD%E7%94%A8%E7%9A%84AI%E8%87%AA%E5%8B%95%E9%85%8D%E8%89%B2%E5%B7%A5%E5%85%B7-%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E5%8C%AF%E5%87%BA%E5%A5%97%E7%94%A8/"/>
+    <id>https://huskylin.github.io/2020/10/24/%E5%A5%BD%E7%94%A8%E7%9A%84AI%E8%87%AA%E5%8B%95%E9%85%8D%E8%89%B2%E5%B7%A5%E5%85%B7-%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E5%8C%AF%E5%87%BA%E5%A5%97%E7%94%A8/</id>
+    <published>2020-10-24T15:44:57.000Z</published>
+    <updated>2020-10-24T15:46:37.993Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="好用的AI自動配色工具-可以直接匯出套用"><a href="#好用的AI自動配色工具-可以直接匯出套用" class="headerlink" title="好用的AI自動配色工具! 可以直接匯出套用!"></a>好用的AI自動配色工具! 可以直接匯出套用!</h1><h2 id="配色工具介紹"><a href="#配色工具介紹" class="headerlink" title="配色工具介紹"></a>配色工具介紹</h2><p><a href="https://colors.eva.design/" target="_blank" rel="noopener">https://colors.eva.design/</a><br>在眾多配色網站中，這款成為我少數幾個有加入標籤的網站<br>他透過深度學習，快速產生具有美感的顏色並且能夠直接匯出使用!!</p><ol><li>選擇主色之後，自動幫你產生網站中常用的功能型配色<br> 喜歡的話可以鎖住保留，不喜歡的話可以一直刷新<br> <img src="https://i.imgur.com/LGtxkxp.gif" alt=""></li><li>調整出喜歡的顏色後，可以匯出成多種格式<br> 包括 Akveo 自家的 Nebular 主題格式，以及常見的 JSON 格式<br> <img src="https://i.imgur.com/N3RuC8m.png" alt=""></li><li>以 Nebular 主題為例，打開來會長這樣<br> 可以很方便地加入到 Nebular 中做自訂主題<br> <img src="https://i.imgur.com/V45whmd.png" alt=""></li></ol><h2 id="選完喜歡的配色，套用到主題中"><a href="#選完喜歡的配色，套用到主題中" class="headerlink" title="選完喜歡的配色，套用到主題中"></a>選完喜歡的配色，套用到主題中</h2><ol><li>將匯出的檔案加入到themes.scss</li></ol><pre><code class="SCSS">$nb-themes: nb-register-theme(  (    color-primary-100: rgba(219, 253, 246, 1),    color-primary-200: rgba(184, 252, 243, 1),    color-primary-300: rgba(146, 246, 241, 1),    ...    ...  custom-theme,  default  );</code></pre><ol start="4"><li>在子元件中需要用到變數的 SCSS 檔案中<br> 引入主題的樣式變數<br> 例如: 將 text-color 這個 class 的顏色設定為主色</li></ol><pre><code class="SCSS">@import &#39;src/app/@theme/styles/themes.scss&#39;;.text-color{  color: nb-theme(color-primary-500);}</code></pre><h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>如果是本來就在用 Nebular 主題的一定要試試看<br>就算不是，一般使用上也非常好用<br>產生出來的顏色都頗有質感<br>快點收藏起來吧~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;好用的AI自動配色工具-可以直接匯出套用&quot;&gt;&lt;a href=&quot;#好用的AI自動配色工具-可以直接匯出套用&quot; class=&quot;headerlink&quot; title=&quot;好用的AI自動配色工具! 可以直接匯出套用!&quot;&gt;&lt;/a&gt;好用的AI自動配色工具! 可以直接匯出套用!&lt;/
+      
+    
+    </summary>
+    
+    
+    
+      <category term="CSS" scheme="https://huskylin.github.io/tags/CSS/"/>
+    
+      <category term="Front-End" scheme="https://huskylin.github.io/tags/Front-End/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis 做資料快取的基本使用 (搭配Node.js)</title>
