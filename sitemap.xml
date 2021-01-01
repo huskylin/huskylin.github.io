@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://huskylin.github.io/2021/01/01/%E5%82%99%E4%BB%BD%E5%9C%A8Docker%E4%B8%AD%E7%9A%84Gitlab%E8%B3%87%E6%96%99-Backup-Gitlab-in-Docker/</loc>
+    
+    <lastmod>2021-01-01T12:03:19.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://huskylin.github.io/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/</loc>
+    
+    <lastmod>2021-01-01T11:59:03.847Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://huskylin.github.io/2020/06/28/MySQL-%E5%9C%A8%E6%AF%8F%E5%80%8B%E7%BE%A4%E7%B5%84%E4%B8%AD%E5%8F%96-N-%E7%AD%86%E8%B3%87%E6%96%99-Get-1-N-Results-From-Each-Group/</loc>
     
     <lastmod>2020-12-16T12:58:03.588Z</lastmod>
@@ -19,13 +33,6 @@
     <loc>https://huskylin.github.io/2020/10/24/%E5%A5%BD%E7%94%A8%E7%9A%84AI%E8%87%AA%E5%8B%95%E9%85%8D%E8%89%B2%E5%B7%A5%E5%85%B7-%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E5%8C%AF%E5%87%BA%E5%A5%97%E7%94%A8/</loc>
     
     <lastmod>2020-10-24T15:46:37.993Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://huskylin.github.io/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/</loc>
-    
-    <lastmod>2020-10-20T16:40:46.107Z</lastmod>
     
   </url>
   
