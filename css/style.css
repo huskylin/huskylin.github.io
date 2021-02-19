@@ -27,7 +27,7 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-  font-family: "Montserrat", "Titillium Web", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;
+  font-family: "Fira Code", "Titillium Web", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -148,7 +148,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: "Montserrat", "Titillium Web", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;;
+  font-family: "Fira Code", "Titillium Web", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;;
   font-size: 1em;
 }
 
@@ -5554,7 +5554,7 @@ pre code {
   background: none;
   text-shadow: none;
   padding: 0;
-  font-size: 1.25em;
+  font-size: 1.55em;
 }
 
 .highlight {
