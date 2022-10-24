@@ -18,16 +18,24 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Tag: Back-End | 工程師都是中二病!</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="工程師都是中二病">
-<meta property="og:url" content="https://huskylin.github.io/tags/Back-End/index.html">
+  <title>React 面試常見觀念系列 - Virtual DOM, Reconciliation | 工程師都是中二病!</title>
+  <meta name="description" content="React 面試常見觀念系列 - Virtual DOM, Reconciliation在 React 中，什麼是 Virtual DOM?在網頁世界中，DOM 是一個用樹狀結構表達網頁文件的模型也是我們可以在瀏覽器中開發者工具中可以看到的實際結構例如:這樣的網頁我們用 HTML 來表達 DOM 可以等同於 &lt;div id&#x3D;&quot;header&quot;&gt;   &lt;h1 cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 面試常見觀念系列 - Virtual DOM, Reconciliation">
+<meta property="og:url" content="https://huskylin.github.io/2022/10/24/React%20%E9%9D%A2%E8%A9%A6%E5%B8%B8%E8%A6%8B%E8%A7%80%E5%BF%B5%E7%B3%BB%E5%88%97%20-%20Virtual%20DOM,%20Reconciliation/index.html">
 <meta property="og:site_name" content="工程師都是中二病">
+<meta property="og:description" content="React 面試常見觀念系列 - Virtual DOM, Reconciliation在 React 中，什麼是 Virtual DOM?在網頁世界中，DOM 是一個用樹狀結構表達網頁文件的模型也是我們可以在瀏覽器中開發者工具中可以看到的實際結構例如:這樣的網頁我們用 HTML 來表達 DOM 可以等同於 &lt;div id&#x3D;&quot;header&quot;&gt;   &lt;h1 cl">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/dhSy6ZB.png">
+<meta property="article:published_time" content="2022-10-24T12:47:47.000Z">
+<meta property="article:modified_time" content="2022-10-24T12:49:10.547Z">
 <meta property="article:author" content="huskylin">
+<meta property="article:tag" content="Front-End">
+<meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/dhSy6ZB.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://huskylin.github.io/tags/Back-End/index.html">
+  <link rel="canonical" href="https://huskylin.github.io/2022/10/24/React%20%E9%9D%A2%E8%A9%A6%E5%B8%B8%E8%A6%8B%E8%A7%80%E5%BF%B5%E7%B3%BB%E5%88%97%20-%20Virtual%20DOM,%20Reconciliation/index.html">
   
   <link rel="alternate" href="/atom.xml" title="工程師都是中二病" type="application/atom+xml">
   
@@ -335,146 +343,204 @@
 </aside>
 
   
-  <main class="main" role="main">
-  <article class="content article article-tags post-type-list" itemscope="">
-    <header class="article-header">
-      <h1 itemprop="name" class="hidden-xs">Tag: Back-End</h1>
-      <p class="text-muted hidden-xs">Total 3 articles</p>
-      <nav role="navigation" id="nav-main" class="okayNav">
-        <ul>
-          <li><a href="/tags">All</a></li>
-          
-          <li><a href="/tags/Python/">Python</a></li>
-          
-          <li><a href="/tags/CSS/">CSS</a></li>
-          
-          <li><a href="/tags/Leaflet/">Leaflet</a></li>
-          
-          <li><a href="/tags/JavaScript/">JavaScript</a></li>
-          
-          <li><a href="/tags/Ubuntu/">Ubuntu</a></li>
-          
-          <li><a href="/tags/部屬/">部屬</a></li>
-          
-          <li><a href="/tags/MySQL/">MySQL</a></li>
-          
-          <li><a href="/tags/Node-js/">Node.js</a></li>
-          
-          <li><a href="/tags/impala/">impala</a></li>
-          
-          <li><a href="/tags/ubuntu/">ubuntu</a></li>
-          
-          <li><a href="/tags/hadoop/">hadoop</a></li>
-          
-          <li><a href="/tags/Front-End/">Front-End</a></li>
-          
-          <li><a href="/tags/Android/">Android</a></li>
-          
-          <li><a href="/tags/新奇分享/">新奇分享</a></li>
-          
-          <li><a href="/tags/Docker/">Docker</a></li>
-          
-          <li><a href="/tags/Gitlab/">Gitlab</a></li>
-          
-          <li><a href="/tags/Back-End/">Back-End</a></li>
-          
-          <li><a href="/tags/React/">React</a></li>
-          
-        </ul>
-      </nav>
-    </header>
-    <!-- /header -->
-    <div class="article-body">
-      <div class="row">
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-React 面試常見觀念系列 - Virtual DOM, Reconciliation" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
         
-<div class="col-md-6">
-    
-<article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="panel-body">
-     <div class="article-meta">
-       <time datetime="2021-06-17T12:53:34.000Z" itemprop="datePublished">2021-06-17</time>
-     </div>
-     <h3 class="article-title" itemprop="name">
-       <a class="article-link" href="/2021/06/17/%E5%A5%BD%E9%A6%99%E7%9A%84%E6%A1%86%E6%9E%B6-NestJS-Zero-to-Hero-%E7%B7%9A%E4%B8%8A%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">好香的框架! NestJS Zero to Hero 線上課程學習筆記</a>
-     </h3>
-   </div>
-   
-   <div class="panel-footer">
-     
-      <a href="/tags/Node-js/" class="label label-default mb">Node.js</a>
-     
-      <a href="/tags/Back-End/" class="label label-default mb">Back-End</a>
-     
-     
-   </div>
-   
-</article>
+  
+    <h1 class="article-title" itemprop="name">
+      React 面試常見觀念系列 - Virtual DOM, Reconciliation
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/10/24/React%20%E9%9D%A2%E8%A9%A6%E5%B8%B8%E8%A6%8B%E8%A7%80%E5%BF%B5%E7%B3%BB%E5%88%97%20-%20Virtual%20DOM,%20Reconciliation/" class="article-date">
+	  <time datetime="2022-10-24T12:47:47.000Z" itemprop="datePublished">2022-10-24</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Front-End/" rel="tag">Front-End</a>, <a class="article-tag-link" href="/tags/React/" rel="tag">React</a>
+  </span>
 
 
-</div>
+        
 
-<div class="col-md-6">
-    
-<article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="panel-body">
-     <div class="article-meta">
-       <time datetime="2021-01-01T11:58:13.000Z" itemprop="datePublished">2021-01-01</time>
-     </div>
-     <h3 class="article-title" itemprop="name">
-       <a class="article-link" href="/2021/01/01/%E5%82%99%E4%BB%BD%E5%9C%A8Docker%E4%B8%AD%E7%9A%84Gitlab%E8%B3%87%E6%96%99-Backup-Gitlab-in-Docker/">備份在Docker中的Gitlab資料 (Backup Gitlab in Docker)</a>
-     </h3>
-   </div>
-   
-   <div class="panel-footer">
-     
-      <a href="/tags/%E9%83%A8%E5%B1%AC/" class="label label-default mb">部屬</a>
-     
-      <a href="/tags/Docker/" class="label label-default mb">Docker</a>
-     
-      <a href="/tags/Gitlab/" class="label label-default mb">Gitlab</a>
-     
-     
-      <span class="label label-default mb">···</span>
-     
-   </div>
-   
-</article>
-
-
-</div>
-
-<div class="col-md-6">
-    
-<article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="panel-body">
-     <div class="article-meta">
-       <time datetime="2020-07-10T10:11:48.000Z" itemprop="datePublished">2020-07-10</time>
-     </div>
-     <h3 class="article-title" itemprop="name">
-       <a class="article-link" href="/2020/07/10/Redis-%E5%81%9A%E8%B3%87%E6%96%99%E5%BF%AB%E5%8F%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-%E6%90%AD%E9%85%8DNode-js/">Redis 做資料快取的基本使用 (搭配Node.js)</a>
-     </h3>
-   </div>
-   
-   <div class="panel-footer">
-     
-      <a href="/tags/%E9%83%A8%E5%B1%AC/" class="label label-default mb">部屬</a>
-     
-      <a href="/tags/Node-js/" class="label label-default mb">Node.js</a>
-     
-      <a href="/tags/Back-End/" class="label label-default mb">Back-End</a>
-     
-     
-   </div>
-   
-</article>
-
-
-</div>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/10/24/React%20%E9%9D%A2%E8%A9%A6%E5%B8%B8%E8%A6%8B%E8%A7%80%E5%BF%B5%E7%B3%BB%E5%88%97%20-%20Virtual%20DOM,%20Reconciliation/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.1k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 4(minutes)</span>
+	
 
       </div>
     </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="React-面試常見觀念系列-Virtual-DOM-Reconciliation"><a href="#React-面試常見觀念系列-Virtual-DOM-Reconciliation" class="headerlink" title="React 面試常見觀念系列 - Virtual DOM, Reconciliation"></a>React 面試常見觀念系列 - Virtual DOM, Reconciliation</h1><h2 id="在-React-中，什麼是-Virtual-DOM"><a href="#在-React-中，什麼是-Virtual-DOM" class="headerlink" title="在 React 中，什麼是 Virtual DOM?"></a>在 React 中，什麼是 Virtual DOM?</h2><p>在網頁世界中，DOM 是一個用樹狀結構表達網頁文件的模型<br>也是我們可以在瀏覽器中開發者工具中可以看到的實際結構<br>例如:這樣的網頁<br><img src="https://i.imgur.com/dhSy6ZB.png" alt=""><br>我們用 HTML 來表達 DOM 可以等同於</p>
+<pre><code class="HTML">&lt;div id=&quot;header&quot;&gt;
+  &lt;h1 class=&quot;title&quot;&gt;React&lt;/h1&gt;
+  &lt;p class=&quot;content&quot;&gt;A JavaScript library for building user&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<p>而虛擬 DOM 則是，用 JavaScript 物件的形式，來儲存這樣的結構(實際上更加複雜)</p>
+<pre><code class="javascript">{
+    tag: &quot;div&quot;,
+    props: {
+        id: &quot;header&quot;
+    },
+    children: [
+        {
+            tag: &quot;h1&quot;,
+            props: { className: &quot;title&quot; },
+            children: [&quot;React&quot;]
+        },
+        {
+            tag: &quot;p&quot;,
+            props: { className: &quot;content&quot; },
+            children: [&quot;A JavaScript library for building user&quot;]
+        }
+    ]
+}</code></pre>
+<h2 id="那麼為什麼要使用-Virtual-DOM-呢"><a href="#那麼為什麼要使用-Virtual-DOM-呢" class="headerlink" title="那麼為什麼要使用 Virtual DOM 呢?"></a>那麼為什麼要使用 Virtual DOM 呢?</h2><p><strong>1. 操作成本與效能</strong><br>操作真實 DOM 的成本可能是巨大的<br>即使畫面只有一小部分需要更新，卻需要重新繪製一整個 DOM<br>就如同在麥當勞點了全餐，但是你發現店員把可樂給成了紅茶<br>店員說「不好意思，我們馬上為您把餐點重做」<br>結果馬上轉身把漢堡跟薯條也都丟掉了<br>你一定會心想「WTF ? 不是重新給一杯飲料就好嗎?」</p>
+<p>尤其在現代網頁中，網頁往往是結構龐大且畫面更新頻繁<br>勢必會有效能低下的問題<br>所以當畫面更新時，React 會建立新的 Virtual DOM tree 跟舊的 tree 進行比較<br>只更新有改變的部分。</p>
+<p><strong>2. 擴展性</strong></p>
+<ul>
+<li>由於 Virtual DOM 其實就是 JS 物件，可以用 JS 的方法來操作 DOM</li>
+<li>Virtual DOM 不只可以轉化成網頁，也可以轉化成 Android 或是 iOS 的介面<br>  所以對開發者角度來說是更有跨平台擴展性的，例如: React Native</li>
+<li>不直接操作 DOM，可以降低被 XSS 攻擊的風險</li>
+</ul>
+<h2 id="那麼它是怎麼更新-Virtual-DOM-tree-的呢"><a href="#那麼它是怎麼更新-Virtual-DOM-tree-的呢" class="headerlink" title="那麼它是怎麼更新 Virtual DOM tree 的呢?"></a>那麼它是怎麼更新 Virtual DOM tree 的呢?</h2><p>如果直接比較新舊兩棵樹，那麼就必須一個一個節點走訪比對，會消耗大量效能<br>所以 React 使用 Diffing 演算法來找出差異，進行更新(替換、刪除、移動、修改)<br>邏輯如下:</p>
+<p><strong>1. 檢查節點類型</strong></p>
+<ul>
+<li>如果新舊類型不同=&gt;直接放棄原有的子樹，直接重建，省去後面走訪與比較所浪費的效能</li>
+<li>如果新舊類型相同=&gt;保留原有子樹，只更新有差異的屬性</li>
+</ul>
+<p>例如: 把一開始的<code>&lt;div&gt;</code>元素改成<code>&lt;section&gt;</code>或其他元素<br>那麼 React 會卸載原本的<code>＜div</code>以及裡面的子樹<br>包含<code>&lt;h1&gt;</code>、<code>&lt;p&gt;</code>都會被銷毀並重建</p>
+<pre><code class="HTML">// 原本的
+&lt;div id=&quot;header&quot;&gt;
+  &lt;h1&gt;...&lt;/h1&gt; 
+  &lt;p class=&quot;content&quot;&gt;A JavaScript library for building user&lt;/p&gt;
+&lt;/div&gt;
+
+// 新的
+&lt;section id=&quot;header&quot;&gt;
+  &lt;h1&gt;...&lt;/h1&gt; 
+  &lt;p class=&quot;content&quot;&gt;A JavaScript library for building user&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<p>如果是同類型，則只會比對、更新有改變的屬性</p>
+<pre><code class="HTML">// 原本的
+&lt;div id=&quot;header&quot;&gt;
+  &lt;h1&gt;...&lt;/h1&gt; 
+  &lt;p class=&quot;content&quot;&gt;...&lt;/p&gt;
+&lt;/div&gt;
+
+// 新的
+&lt;section id=&quot;header&quot;&gt;
+  &lt;h1&gt;...&lt;/h1&gt; 
+  &lt;p class=&quot;newContent&quot;&gt;...&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<p><strong>2. 在遍歷 DOM 節點的子元素時</strong></p>
+<ul>
+<li>沒有 key 屬性=&gt; React 可能會分不出來到底是部分修改還是全部更新，而造成效能浪費</li>
+<li>擁有 key 屬性=&gt;，react 會用 key 來作為識別，而不會直接全部更新</li>
+</ul>
+<p>key 的部分可以獨立出一篇，就不深入解釋</p>
+<h2 id="所以-Virtual-DOM-就是無敵的了"><a href="#所以-Virtual-DOM-就是無敵的了" class="headerlink" title="所以 Virtual DOM 就是無敵的了?"></a>所以 Virtual DOM 就是無敵的了?</h2><p><strong>Diffing 算法也是需要成本的!</strong><br>當遍歷樹節點、並且一一比較的過程，過於複雜<br>那麼就有可能出現，不進行比較，直接重新建立DOM還比較划算的情況<br>所以在設計上，官方也提醒我們</p>
+<ol>
+<li>如果頁面常常在兩種不同類型的元件或元素間切換，但其實內容是差不多的，那建議可以改成同類型的</li>
+<li>如果是大型的列表，要設計合理、穩定的key，才能把效能最佳化</li>
+</ol>
+<p>更多資料可以參考官方文件<br><a href="https://reactjs.org/docs/reconciliation.html#the-diffing-algorithm" target="_blank" rel="noopener">https://reactjs.org/docs/reconciliation.html#the-diffing-algorithm</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://huskylin.github.io/2022/10/24/React%20%E9%9D%A2%E8%A9%A6%E5%B8%B8%E8%A6%8B%E8%A7%80%E5%BF%B5%E7%B3%BB%E5%88%97%20-%20Virtual%20DOM,%20Reconciliation/" title="React 面試常見觀念系列 - Virtual DOM, Reconciliation" target="_blank" rel="external">https://huskylin.github.io/2022/10/24/React%20%E9%9D%A2%E8%A9%A6%E5%B8%B8%E8%A6%8B%E8%A7%80%E5%BF%B5%E7%B3%BB%E5%88%97%20-%20Virtual%20DOM,%20Reconciliation/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">huskylin</span><small class="ml-1x">雜端工程師</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
   </article>
-   
+  
+    
+  <section id="comments">
+  	
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/06/17/%E5%A5%BD%E9%A6%99%E7%9A%84%E6%A1%86%E6%9E%B6-NestJS-Zero-to-Hero-%E7%B7%9A%E4%B8%8A%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/" title="好香的框架! NestJS Zero to Hero 線上課程學習筆記"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="facebook,twitter" data-mobile-sites="facebook,twitter"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -532,6 +598,29 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+
+   
+
+
+
+
+   
+    
+    <script defer>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://huskylin.github.io/2022/10/24/React%20%E9%9D%A2%E8%A9%A6%E5%B8%B8%E8%A6%8B%E8%A7%80%E5%BF%B5%E7%B3%BB%E5%88%97%20-%20Virtual%20DOM,%20Reconciliation/';
+        
+        this.page.identifier = 'React 面試常見觀念系列 - Virtual DOM, Reconciliation';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'ha47' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
 
 
 
