@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/dhSy6ZB.png">
 <meta property="article:published_time" content="2022-10-24T12:47:47.000Z">
-<meta property="article:modified_time" content="2022-10-24T13:02:00.921Z">
+<meta property="article:modified_time" content="2022-10-24T13:03:23.202Z">
 <meta property="article:author" content="huskylin">
 <meta property="article:tag" content="Front-End">
 <meta property="article:tag" content="React">
@@ -423,8 +423,8 @@
 <h2 id="那麼它是怎麼更新-Virtual-DOM-tree-的呢"><a href="#那麼它是怎麼更新-Virtual-DOM-tree-的呢" class="headerlink" title="那麼它是怎麼更新 Virtual DOM tree 的呢?"></a>那麼它是怎麼更新 Virtual DOM tree 的呢?</h2><p>如果直接比較新舊兩棵樹，那麼就必須一個一個節點走訪比對，會消耗大量效能<br>所以 React 使用 Diffing 演算法來找出差異，進行更新(替換、刪除、移動、修改)<br>邏輯如下:</p>
 <p><strong>1. 檢查節點類型</strong></p>
 <ul>
-<li>如果新舊類型不同=&gt;直接放棄原有的子樹，直接重建，省去後面走訪與比較所浪費的效能</li>
-<li>如果新舊類型相同=&gt;保留原有子樹，只更新有差異的屬性</li>
+<li>如果新舊類型不同 =&gt; 直接放棄原有的子樹，直接重建，省去後面走訪與比較所浪費的效能</li>
+<li>如果新舊類型相同 =&gt; 保留原有子樹，只更新有差異的屬性</li>
 </ul>
 <p>例如: 把一開始的<code>&lt;div&gt;</code>元素改成<code>&lt;section&gt;</code>或其他元素<br>那麼 React 會卸載原本的<code>&lt;div&gt;</code>以及裡面的子樹<br>包含<code>&lt;h1&gt;</code>、<code>&lt;p&gt;</code>都會被銷毀並重建</p>
 <pre><code class="HTML">// 原本的
