@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://i.imgur.com/9J0hr0m.gif">
 <meta property="og:image" content="https://i.imgur.com/x135Fgl.gif">
 <meta property="article:published_time" content="2023-02-17T09:49:56.000Z">
-<meta property="article:modified_time" content="2023-02-17T09:54:54.601Z">
+<meta property="article:modified_time" content="2023-02-17T10:00:26.111Z">
 <meta property="article:author" content="huskylin">
 <meta property="article:tag" content="Front-End">
 <meta name="twitter:card" content="summary">
@@ -378,10 +378,10 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/02/17/%E7%94%A8%E7%94%9F%E6%B4%BB%E4%B8%AD%E7%9A%84%E4%BE%8B%E5%AD%90%E7%90%86%E8%A7%A3%E9%98%B2%E6%8A%96%E8%88%87%E7%AF%80%E6%B5%81-Debounce-Throttle-in-daily-life/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 766(words)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 855(words)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 2(minutes)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 3(minutes)</span>
 	
 
       </div>
@@ -442,6 +442,7 @@ const debounce = (fn, delay) =&gt; {
 <li>接通處理 =&gt; 對應的事件，如: 顯示動畫、顯示自動補全</li>
 </ul>
 <p><img src="https://i.imgur.com/x135Fgl.gif" alt=""></p>
+<p>而程式碼的邏輯<br>除了接電話，撰文時也覺得其實很像遊戲放技能<br>接收到執行的指令時，會檢查是不是在忙線中、CD是不是還在冷卻<br>如果這段時間內又被觸發，就不會觸發<br>直到冷卻完成才能再接下一通、才能再放技能</p>
 <pre><code class="js">// throttle 實作
 const throttle = (fn, delay) =&gt; {
   let timeoutID = null;
